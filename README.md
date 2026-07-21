@@ -65,6 +65,44 @@ is sent. To enable real delivery via [Resend](https://resend.com):
 Validation is enforced server-side in `src/app/contact/actions.ts` regardless of
 whether email delivery is configured.
 
+## Deploy (Cloudflare)
+
+Deployed to Cloudflare's Workers platform via the [OpenNext](https://opennext.js.org/cloudflare)
+adapter (the current, recommended way to run Next.js on Cloudflare — the older
+`@cloudflare/next-on-pages` is deprecated). The server action (contact form)
+runs on the Worker; all other routes are static assets.
+
+```bash
+yarn preview   # build with OpenNext + run the Worker locally (wrangler dev)
+yarn deploy    # build + deploy to your Cloudflare account (needs `wrangler login`)
+```
+
+Config lives in `wrangler.jsonc` and `open-next.config.ts`.
+
+### First-time setup (dashboard, recommended)
+
+1. Cloudflare dashboard → **Workers & Pages → Create → Import a repository** →
+   select `mughalfrazk/next-codenalgo`.
+2. Build command: `yarn deploy` (or `npx opennextjs-cloudflare build && npx wrangler deploy`).
+   Deploy command is handled by the build; leave the output as configured by `wrangler.jsonc`.
+3. Add the contact-form secrets under **Settings → Variables and Secrets**
+   (encrypted): `RESEND_API_KEY`, and optionally `CONTACT_FROM_EMAIL` /
+   `CONTACT_TO_EMAIL`. (Without them the form still works — it just logs instead
+   of emailing.)
+4. **Custom domain:** Settings → Domains & Routes → **Add custom domain**. If the
+   domain's DNS is on Cloudflare, records + HTTPS are configured automatically;
+   otherwise add the CNAME they give you at your registrar.
+
+### Or deploy from the CLI
+
+```bash
+yarn dlx wrangler login      # once
+yarn deploy                  # build + publish
+yarn dlx wrangler secret put RESEND_API_KEY   # add secrets
+```
+
+For local Worker dev, copy `.dev.vars.example` → `.dev.vars` and fill in secrets.
+
 ## Design system
 
 Tokens (colors, brand gradient, glass surface, blob keyframes) are defined once
