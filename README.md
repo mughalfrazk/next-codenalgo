@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Code & Algo — Marketing Site
 
-## Getting Started
+Production Next.js implementation of the Code & Algo marketing site (software
+development & IT consultancy). Built from the approved Claude design across five
+pages: **Home, About, Services, Service detail, Contact**.
 
-First, run the development server:
+## Stack
+
+- **Next.js 16** (App Router) + **React 19** + **TypeScript**
+- **Tailwind CSS v4** — design tokens defined in `src/app/globals.css`
+- **Resend** for contact-form email delivery (optional; see below)
+- **Zod** for shared client/server form validation
+
+## Requirements
+
+- **Node 24** (pinned in `.nvmrc`)
+
+- **Yarn** as the package manager
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+nvm use            # picks up .nvmrc → Node 24
+yarn install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Develop
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+yarn dev           # http://localhost:3000
+yarn lint          # ESLint
+yarn build         # production build (static-generates all routes)
+yarn start         # serve the production build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project structure
 
-## Learn More
+```
+src/
+  app/
+    layout.tsx              root layout: fonts, metadata, nav/footer, background blobs
+    page.tsx                Home
+    about/page.tsx          About
+    services/page.tsx       Services listing
+    services/[slug]/page.tsx  Dynamic service detail (one per service, statically generated)
+    contact/
+      page.tsx              Contact
+      actions.ts            'use server' form submission (Zod + Resend)
+      schema.ts             shared Zod schema + types
+  components/               reusable UI (Navbar, Footer, Card, Reveal, CountUp, Faq, …)
+  content/                  all copy & data (site, services, home, about, contact)
+```
 
-To learn more about Next.js, take a look at the following resources:
+Content lives in `src/content/*` — edit those files to change copy, services,
+stats, team, FAQs, etc. without touching components.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contact form / email
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The contact form works out of the box: without credentials, submissions are
+validated and logged server-side and the user sees the success state — no email
+is sent. To enable real delivery via [Resend](https://resend.com):
 
-## Deploy on Vercel
+1. Copy `.env.example` → `.env.local`
+2. Set `RESEND_API_KEY` (and optionally `CONTACT_FROM_EMAIL` / `CONTACT_TO_EMAIL`).
+   The `from` address must be verified in your Resend account.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Validation is enforced server-side in `src/app/contact/actions.ts` regardless of
+whether email delivery is configured.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Design system
+
+Tokens (colors, brand gradient, glass surface, blob keyframes) are defined once
+in `src/app/globals.css` and exposed as Tailwind utilities: `glass`,
+`bg-brand-gradient`, `text-brand-gradient`, plus color tokens (`text-ink`,
+`text-muted`, `bg-canvas`, `text-brand`, …). All motion respects
+`prefers-reduced-motion`.
+
+## Notes
+
+- The original Claude Design `.dc.html` files and `support.js` runtime were used
+  only as the source of truth for layout, copy, and data — they are not part of
+  this codebase.

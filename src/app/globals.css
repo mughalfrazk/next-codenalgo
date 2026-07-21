@@ -1,26 +1,97 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * Code & Algo design tokens — extracted from the Claude Design source.
+ * Brand gradient: linear-gradient(135deg,#8B7CF6,#6EC6FF)
+ */
+@theme {
+  --font-sans: var(--font-jakarta), "Plus Jakarta Sans", ui-sans-serif, system-ui,
+    sans-serif;
+
+  --color-canvas: #f5f4fb;
+  --color-ink: #23222b;
+  --color-muted: #69687a;
+  --color-muted-2: #8b8a99;
+  --color-muted-3: #a3a2b3;
+
+  --color-brand: #8b7cf6;
+  --color-brand-blue: #6ec6ff;
+  --color-brand-pink: #ff9ec4;
+
+  --color-glass: rgb(255 255 255 / 0.6);
+  --color-glass-border: rgb(255 255 255 / 0.7);
+
+  --shadow-glass: 0 12px 30px rgb(139 124 246 / 0.12);
+  --shadow-glass-lg: 0 20px 50px rgb(139 124 246 / 0.18);
+  --shadow-cta: 0 10px 30px rgb(139 124 246 / 0.35);
+
+  --animate-blob-a: blobFloatA 14s ease-in-out infinite;
+  --animate-blob-b: blobFloatB 16s ease-in-out infinite;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@keyframes blobFloatA {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(30px, -40px) scale(1.08);
+  }
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes blobFloatB {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-40px, 30px) scale(1.05);
   }
 }
 
+/* Brand gradient reused across buttons, chips, icon tiles. */
+@utility bg-brand-gradient {
+  background-image: linear-gradient(135deg, #8b7cf6, #6ec6ff);
+}
+
+/* Gradient text (the count-up stat numbers, etc.). */
+@utility text-brand-gradient {
+  background-image: linear-gradient(135deg, #8b7cf6, #6ec6ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Frosted glass surface used by every card in the design. */
+@utility glass {
+  background: rgb(255 255 255 / 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgb(255 255 255 / 0.7);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+/* Respect reduced-motion: kill blob drift and force reveals to their final state. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
