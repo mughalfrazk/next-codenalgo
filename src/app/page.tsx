@@ -61,13 +61,14 @@ export default function HomePage() {
           <Reveal>
             <Eyebrow className="mb-4">Who We Are</Eyebrow>
             <h2 className="mb-5 text-[28px] leading-[1.25] font-extrabold text-ink sm:text-[32px]">
-              Creating Smarter Solutions to Shape the Future
+              We are Code &amp; Algo
             </h2>
             <p className="mb-[26px] text-[15px] leading-[1.75] font-medium text-muted">
-              We&apos;re a team of thinkers, creators, and tech experts crafting intuitive
-              software, streamlining infrastructure, and fueling business evolution. Technology
-              is more than tools and code — it&apos;s the backbone of sustainable growth. Our
-              services are agile, customer-focused, and built to scale as your needs evolve.
+              A small group of tech lovers, creative thinkers, and problem solvers. We turn ideas
+              into digital tools that get the job done. From improving workflows to crafting
+              personalized software to using AI for real-world problems, we help businesses move
+              quicker and work better. We focus on what matters, stay curious, and deliver results
+              that count.
             </p>
             <Link href="/about" className="text-[14px] font-bold text-brand">
               Discover More →

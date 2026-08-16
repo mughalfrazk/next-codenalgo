@@ -2,9 +2,9 @@ import type { QA } from "./services";
 
 export const homeHero = {
   eyebrow: "Crafting Digital Success",
-  title: "Next-Gen Solutions for World-Changing Ideas",
+  title: "Smart Software. Real Results.",
   subtitle:
-    "We build intuitive software, streamline infrastructure, and turn ambitious ideas into systems that scale.",
+    "Custom-built solutions that align with your vision, scale with your business, and deliver impact at every stage.",
 };
 
 export const clientLogos = [
@@ -42,11 +42,11 @@ export const caseStudies = [
 ];
 
 export const whyChoose = [
-  { code: "01", title: "Harnessing the Power of AI & ML", desc: "Building and deploying AI and machine learning solutions that unlock new levels of efficiency and insight." },
-  { code: "02", title: "Building Custom Software", desc: "Developing unique software solutions for your specific challenges and opportunities." },
-  { code: "03", title: "Infrastructure Management", desc: "Secure, trusted, scalable infrastructure management — so you can focus on innovation." },
-  { code: "04", title: "Enterprise Systems Optimization", desc: "We build, integrate, customize, and support your mission-critical enterprise systems." },
-  { code: "05", title: "Talent On-Demand", desc: "Fast, flexible staff augmentation and support to meet your team's needs." },
+  { code: "01", title: "Building Custom Software", desc: "Developing unique software solutions tailored to your specific challenges and opportunities." },
+  { code: "02", title: "Infrastructure Management", desc: "Secured, trusted, and scalable infrastructure management services, leaving you to focus on innovation." },
+  { code: "03", title: "Enterprise Systems Optimization", desc: "We build, integrate, customize, and support your mission-critical enterprise systems." },
+  { code: "04", title: "Providing Talent On-Demand", desc: "Fast, flexible staff augmentation and support services to meet your team's needs." },
+  { code: "05", title: "Harnessing the Power of AI & ML", desc: "Creating and deploying Artificial Intelligence and Machine Learning solutions to achieve new levels of efficiency and insight." },
 ];
 
 export type ProcessGroup = {
