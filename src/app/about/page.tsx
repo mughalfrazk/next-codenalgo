@@ -1,11 +1,11 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { Section } from "@/components/Section";
-import { PageHero } from "@/components/PageHero";
-import { Eyebrow } from "@/components/Eyebrow";
-import { StatsRow } from "@/components/StatsRow";
-import { Reveal } from "@/components/Reveal";
-import { CtaBand } from "@/components/CtaBand";
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import { Section } from '@/components/Section'
+import { PageHero } from '@/components/PageHero'
+import { Eyebrow } from '@/components/Eyebrow'
+import { StatsRow } from '@/components/StatsRow'
+import { Reveal } from '@/components/Reveal'
+import { CtaBand } from '@/components/CtaBand'
 import {
   aboutHero,
   aboutIntro,
@@ -15,12 +15,12 @@ import {
   team,
   values,
   valuePills,
-} from "@/content/about";
+} from '@/content/about'
 
 export const metadata: Metadata = {
-  title: "About Us",
+  title: 'About Us',
   description: aboutHero.subtitle,
-};
+}
 
 export default function AboutPage() {
   return (
@@ -37,10 +37,15 @@ export default function AboutPage() {
             <h2 className="mb-5 text-[28px] leading-[1.25] font-extrabold text-ink sm:text-[32px]">
               Building The Future With Cutting-Edge IT Solutions
             </h2>
-            <p className="mb-[26px] text-[15px] leading-[1.75] font-medium text-muted">{aboutIntro}</p>
+            <p className="mb-[26px] text-[15px] leading-[1.75] font-medium text-muted">
+              {aboutIntro}
+            </p>
             <div className="mb-7 grid grid-cols-1 gap-3 sm:grid-cols-2">
               {valuePills.map((vp) => (
-                <div key={vp} className="glass rounded-2xl px-[18px] py-4 text-[13px] font-bold text-ink">
+                <div
+                  key={vp}
+                  className="glass rounded-2xl px-[18px] py-4 text-[13px] font-bold text-ink"
+                >
                   {vp}
                 </div>
               ))}
@@ -73,10 +78,7 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           {missionVision.map((mv) => (
             <Reveal key={mv.title} className="glass rounded-3xl p-9">
-              <div
-                className="mb-5 h-11 w-11 rounded-[14px]"
-                style={{ background: mv.gradient }}
-              />
+              <div className="mb-5 h-11 w-11 rounded-[14px]" style={{ background: mv.gradient }} />
               <div className="mb-3 text-[20px] font-bold text-ink">{mv.title}</div>
               <div className="text-[15px] leading-[1.75] font-medium text-muted">{mv.desc}</div>
             </Reveal>
@@ -154,5 +156,5 @@ export default function AboutPage() {
         ctaLabel="Get In Touch Now"
       />
     </>
-  );
+  )
 }

@@ -1,5 +1,5 @@
-import { Container } from "./Section";
-import { Eyebrow } from "./Eyebrow";
+import { Container } from './Section'
+import { Eyebrow } from './Eyebrow'
 
 /** Centered page hero used by the About, Services, and Contact pages. */
 export function PageHero({
@@ -7,9 +7,9 @@ export function PageHero({
   title,
   subtitle,
 }: {
-  eyebrow: string;
-  title: string;
-  subtitle: string;
+  eyebrow: string
+  title: string
+  subtitle: string
 }) {
   return (
     <Container className="pt-16 pb-14 text-center sm:pt-[100px] sm:pb-[70px]">
@@ -21,5 +21,5 @@ export function PageHero({
         {subtitle}
       </p>
     </Container>
-  );
+  )
 }

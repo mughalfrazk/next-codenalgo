@@ -1,14 +1,14 @@
-import Link from "next/link";
-import { Container, Section } from "@/components/Section";
-import { Eyebrow } from "@/components/Eyebrow";
-import { GradientButton } from "@/components/GradientButton";
-import { StatsRow } from "@/components/StatsRow";
-import { ServiceCard } from "@/components/ServiceCard";
-import { Reveal } from "@/components/Reveal";
-import { ProcessAccordion } from "@/components/ProcessAccordion";
-import { Faq } from "@/components/Faq";
-import { CtaBand } from "@/components/CtaBand";
-import { services } from "@/content/services";
+import Link from 'next/link'
+import { Container, Section } from '@/components/Section'
+import { Eyebrow } from '@/components/Eyebrow'
+import { GradientButton } from '@/components/GradientButton'
+import { StatsRow } from '@/components/StatsRow'
+import { ServiceCard } from '@/components/ServiceCard'
+import { Reveal } from '@/components/Reveal'
+import { ProcessAccordion } from '@/components/ProcessAccordion'
+import { Faq } from '@/components/Faq'
+import { CtaBand } from '@/components/CtaBand'
+import { services } from '@/content/services'
 import {
   caseStudies,
   clientLogos,
@@ -18,7 +18,7 @@ import {
   processSteps,
   testimonials,
   whyChoose,
-} from "@/content/home";
+} from '@/content/home'
 
 export default function HomePage() {
   return (
@@ -114,7 +114,9 @@ export default function HomePage() {
                 {cs.tag}
               </div>
               <div className="mb-2.5 text-[18px] font-bold text-ink">{cs.title}</div>
-              <div className="mb-4 text-[14px] leading-[1.6] font-medium text-muted">{cs.result}</div>
+              <div className="mb-4 text-[14px] leading-[1.6] font-medium text-muted">
+                {cs.result}
+              </div>
               <div className="text-[13px] font-bold text-brand">Read case study →</div>
             </Reveal>
           ))}
@@ -185,5 +187,5 @@ export default function HomePage() {
         ctaLabel="Get a Free Consultation"
       />
     </>
-  );
+  )
 }

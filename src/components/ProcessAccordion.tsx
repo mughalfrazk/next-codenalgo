@@ -1,19 +1,19 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import type { ProcessGroup } from "@/content/home";
+import { useState } from 'react'
+import type { ProcessGroup } from '@/content/home'
 
 /**
  * The Home "Our Process" accordion — numbered steps that expand to reveal a
  * grid of sub-items. First step open by default.
  */
 export function ProcessAccordion({ groups }: { groups: ProcessGroup[] }) {
-  const [open, setOpen] = useState<number | null>(0);
+  const [open, setOpen] = useState<number | null>(0)
 
   return (
     <div className="flex flex-col gap-3.5">
       {groups.map((group, i) => {
-        const isOpen = i === open;
+        const isOpen = i === open
         return (
           <div key={i} className="glass rounded-3xl px-6 py-6 sm:px-[30px] sm:py-[26px]">
             <button
@@ -29,10 +29,10 @@ export function ProcessAccordion({ groups }: { groups: ProcessGroup[] }) {
                 <span className="text-[19px] font-bold text-ink">{group.title}</span>
               </span>
               <span
-                className={`text-[20px] font-bold ${isOpen ? "text-brand" : "text-muted-3"}`}
+                className={`text-[20px] font-bold ${isOpen ? 'text-brand' : 'text-muted-3'}`}
                 aria-hidden
               >
-                {isOpen ? "–" : "+"}
+                {isOpen ? '–' : '+'}
               </span>
             </button>
             {isOpen && (
@@ -46,8 +46,8 @@ export function ProcessAccordion({ groups }: { groups: ProcessGroup[] }) {
               </div>
             )}
           </div>
-        );
+        )
       })}
     </div>
-  );
+  )
 }

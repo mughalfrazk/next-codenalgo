@@ -6,11 +6,11 @@
   "compatibility_flags": ["nodejs_compat"],
   "assets": {
     "directory": ".open-next/assets",
-    "binding": "ASSETS"
+    "binding": "ASSETS",
   },
   "observability": {
-    "enabled": true
-  }
+    "enabled": true,
+  },
   // Secrets (RESEND_API_KEY, CONTACT_FROM_EMAIL, CONTACT_TO_EMAIL) are NOT set
   // here — add them as encrypted secrets via the dashboard or:
   //   wrangler secret put RESEND_API_KEY
