@@ -54,10 +54,10 @@ export default function AboutPage() {
               Contact Us →
             </Link>
           </Reveal>
-          <div className="glass relative h-[400px] overflow-hidden rounded-3xl shadow-[0_20px_50px_rgba(139,124,246,.18)]">
+          <div className="glass relative h-[400px] overflow-hidden rounded-3xl shadow-[0_20px_50px_rgba(56,108,234,.18)]">
             <div className="absolute top-9 left-9 h-[100px] w-[100px] rounded-[28px] bg-brand-gradient opacity-70" />
-            <div className="absolute right-[50px] bottom-[60px] h-[140px] w-[140px] rounded-full opacity-60 [background:linear-gradient(135deg,#FF9EC4,#8B7CF6)]" />
-            <div className="absolute top-[180px] right-[120px] h-[60px] w-[60px] rounded-2xl opacity-50 [background:linear-gradient(135deg,#6EC6FF,#8B7CF6)]" />
+            <div className="absolute right-[50px] bottom-[60px] h-[140px] w-[140px] rounded-full opacity-60 [background:linear-gradient(135deg,#6C8FF5,#386cea)]" />
+            <div className="absolute top-[180px] right-[120px] h-[60px] w-[60px] rounded-2xl opacity-50 [background:linear-gradient(135deg,#4A6FD8,#386cea)]" />
           </div>
         </div>
       </Section>
@@ -95,7 +95,7 @@ export default function AboutPage() {
           Milestones Along The Way
         </h2>
         <div className="relative pl-7">
-          <div className="absolute top-1.5 bottom-1.5 left-[5px] w-0.5 [background:linear-gradient(180deg,#8B7CF6,#6EC6FF)]" />
+          <div className="absolute top-1.5 bottom-1.5 left-[5px] w-0.5 [background:linear-gradient(180deg,#386cea,#4A6FD8)]" />
           {milestones.map((ms) => (
             <Reveal key={ms.year} className="relative pb-[34px]">
               <div className="absolute top-0.5 left-[-28px] h-3 w-3 rounded-full bg-brand-gradient" />

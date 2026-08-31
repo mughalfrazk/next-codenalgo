@@ -24,7 +24,7 @@ function SubmitButton({ done }: { done: boolean }) {
     <button
       type="submit"
       disabled={pending || done}
-      className="col-span-2 rounded-full bg-brand-gradient px-[30px] py-[15px] text-[14px] font-bold text-white shadow-[0_10px_26px_rgba(139,124,246,.35)] transition-opacity disabled:opacity-70"
+      className="col-span-2 rounded-full bg-brand-gradient px-[30px] py-[15px] text-[14px] font-bold text-white shadow-[0_10px_26px_rgba(56,108,234,.35)] transition-opacity disabled:opacity-70"
     >
       {done ? 'Message Sent ✓' : pending ? 'Sending…' : 'Send Message'}
     </button>
@@ -123,7 +123,7 @@ export function ContactForm() {
 
       <div className="col-span-2">
         <label className="flex items-center gap-2.5 text-[13px] font-medium text-muted">
-          <input type="checkbox" name="consent" className="h-4 w-4 accent-[#8B7CF6]" />I agree to be
+          <input type="checkbox" name="consent" className="h-4 w-4 accent-[#386cea]" />I agree to be
           contacted about my enquiry.
         </label>
         <FieldError msg={state.errors?.consent} />

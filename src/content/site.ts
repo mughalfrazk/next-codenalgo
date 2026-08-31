@@ -24,7 +24,7 @@ export const footerCompany = [
 ] as const
 
 export const socials = [
-  { label: 'LinkedIn', short: 'in', href: '#' },
-  { label: 'GitHub', short: 'gh', href: '#' },
-  { label: 'X', short: 'X', href: '#' },
+  { label: 'LinkedIn', short: 'in', href: 'https://www.linkedin.com/company/codenalgo/' },
+  { label: 'Facebook', short: 'fb', href: 'https://www.facebook.com/codenalgo' },
+  { label: 'Instagram', short: 'ig', href: 'https://www.instagram.com/code.nalgo' },
 ] as const

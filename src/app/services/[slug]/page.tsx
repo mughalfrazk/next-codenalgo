@@ -61,9 +61,9 @@ export default async function ServiceDetailPage({ params }: { params: Promise<Pa
           <Reveal>
             <p className="text-[15px] leading-[1.8] font-medium text-muted">{service.overview}</p>
           </Reveal>
-          <div className="glass relative h-[280px] overflow-hidden rounded-3xl shadow-[0_20px_50px_rgba(139,124,246,.18)]">
+          <div className="glass relative h-[280px] overflow-hidden rounded-3xl shadow-[0_20px_50px_rgba(56,108,234,.18)]">
             <div className="absolute top-[30px] left-[30px] h-20 w-20 rounded-3xl bg-brand-gradient opacity-70" />
-            <div className="absolute right-[50px] bottom-10 h-[110px] w-[110px] rounded-full opacity-60 [background:linear-gradient(135deg,#FF9EC4,#8B7CF6)]" />
+            <div className="absolute right-[50px] bottom-10 h-[110px] w-[110px] rounded-full opacity-60 [background:linear-gradient(135deg,#6C8FF5,#386cea)]" />
           </div>
         </div>
       </Section>
@@ -88,7 +88,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<Pa
           {service.processTitle}
         </h2>
         <div className="relative grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="absolute top-5 right-[10%] left-[10%] hidden h-0.5 lg:block [background:linear-gradient(90deg,#8B7CF6,#6EC6FF)]" />
+          <div className="absolute top-5 right-[10%] left-[10%] hidden h-0.5 lg:block [background:linear-gradient(90deg,#386cea,#4A6FD8)]" />
           {service.processSteps.map((ps, i) => (
             <Reveal key={ps.n} delay={(i % 4) * 70} className="relative">
               <div className="relative z-[1] mb-[18px] flex h-10 w-10 items-center justify-center rounded-full bg-brand-gradient text-[14px] font-bold text-white">
@@ -121,7 +121,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<Pa
           {service.techStack.map((tc) => (
             <span
               key={tc}
-              className="rounded-full bg-[rgba(139,124,246,.12)] px-4 py-2 text-[13px] font-semibold text-muted"
+              className="rounded-full bg-brand-tint px-4 py-2 text-[13px] font-semibold text-muted"
             >
               {tc}
             </span>

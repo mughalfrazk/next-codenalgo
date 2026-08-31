@@ -47,7 +47,7 @@ import { site } from '@/content/site'
 describe('Footer', () => {
   it('renders the site name and tagline', () => {
     render(<Footer />)
-    expect(screen.getAllByText(site.name).length).toBeGreaterThan(0)
+    expect(screen.getAllByText('CODE & ALGO').length).toBeGreaterThan(0)
     expect(screen.getByText(site.tagline)).toBeDefined()
   })
 

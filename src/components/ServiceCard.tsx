@@ -7,7 +7,7 @@ export function ServiceCard({ service, delay = 0 }: { service: Service; delay?: 
   return (
     <Reveal
       delay={delay}
-      className="glass rounded-3xl p-7 shadow-[0_12px_26px_rgba(139,124,246,.1)]"
+      className="glass rounded-3xl p-7 shadow-[0_12px_26px_rgba(56,108,234,.1)]"
     >
       <Link href={`/services/${service.slug}`} className="block">
         <div className="mb-[18px] flex h-11 w-11 items-center justify-center rounded-[14px] bg-brand-gradient text-[11px] font-bold text-white">
@@ -21,7 +21,7 @@ export function ServiceCard({ service, delay = 0 }: { service: Service; delay?: 
           {service.stack.map((tech) => (
             <span
               key={tech}
-              className="rounded-full bg-[rgba(139,124,246,.12)] px-3 py-1.5 text-[11px] font-semibold text-muted"
+              className="rounded-full bg-brand-tint px-3 py-1.5 text-[11px] font-semibold text-muted"
             >
               {tech}
             </span>

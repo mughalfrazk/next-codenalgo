@@ -45,9 +45,9 @@ export function DefaultBlobs() {
   return (
     <BlobField
       blobs={[
-        { color: 'rgba(139,124,246,.35)', top: '-140px', left: '-100px', size: 480, anim: 'a' },
-        { color: 'rgba(110,198,255,.32)', top: '200px', right: '-160px', size: 520, anim: 'b' },
-        { color: 'rgba(255,158,196,.3)', top: '900px', left: '20%', size: 460, anim: 'a' },
+        { color: 'var(--color-blob-a)', top: '-140px', left: '-100px', size: 480, anim: 'a' },
+        { color: 'var(--color-blob-b)', top: '200px', right: '-160px', size: 520, anim: 'b' },
+        { color: 'var(--color-blob-c)', top: '900px', left: '20%', size: 460, anim: 'a' },
       ]}
     />
   )

@@ -59,7 +59,7 @@ export default function ContactPage() {
                     key={s.label}
                     href={s.href}
                     aria-label={s.label}
-                    className="flex h-[34px] w-[34px] items-center justify-center rounded-full bg-[rgba(139,124,246,.12)] text-[12px] font-bold text-brand"
+                    className="flex h-[34px] w-[34px] items-center justify-center rounded-full bg-brand-tint text-[12px] font-bold text-brand"
                   >
                     {s.short}
                   </a>
@@ -73,11 +73,11 @@ export default function ContactPage() {
                 className="absolute inset-0"
                 style={{
                   backgroundImage:
-                    'linear-gradient(rgba(139,124,246,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(139,124,246,.12) 1px,transparent 1px)',
+                    'linear-gradient(rgba(56,108,234,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(56,108,234,.12) 1px,transparent 1px)',
                   backgroundSize: '24px 24px',
                 }}
               />
-              <div className="absolute top-1/2 left-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-gradient shadow-[0_0_0_8px_rgba(139,124,246,.2)]" />
+              <div className="absolute top-1/2 left-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-gradient shadow-[0_0_0_8px_rgba(56,108,234,.2)]" />
             </div>
 
             <div className="rounded-3xl bg-brand-gradient p-6 text-white">
