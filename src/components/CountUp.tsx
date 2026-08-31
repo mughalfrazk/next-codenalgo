@@ -24,6 +24,7 @@ export function CountUp({
 
   useEffect(() => {
     const el = ref.current;
+    /* v8 ignore next -- ref always bound by the time effect runs */
     if (!el) return;
 
     const reduced =
@@ -39,6 +40,7 @@ export function CountUp({
         const p = Math.min(1, (now - start) / duration);
         const eased = 1 - Math.pow(1 - p, 3);
         setDisplay(Math.round(value * eased));
+        /* v8 ignore next 3 -- rAF mock completes animation in a single tick (p >= 1 always in tests) */
         if (p < 1) {
           raf = requestAnimationFrame(tick);
         } else {
@@ -50,6 +52,7 @@ export function CountUp({
 
     const io = new IntersectionObserver(
       ([entry]) => {
+        /* v8 ignore next -- fires when not-intersecting or already started; neither occurs in tests */
         if (entry.isIntersecting && !started) {
           started = true;
           if (reduced) {

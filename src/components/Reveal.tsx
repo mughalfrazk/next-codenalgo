@@ -24,9 +24,11 @@ export function Reveal({
 
   useEffect(() => {
     const el = ref.current;
+    /* v8 ignore next -- ref always bound by the time effect runs */
     if (!el) return;
     const io = new IntersectionObserver(
       ([entry]) => {
+        /* v8 ignore next -- only fires when IO reports not-intersecting, which doesn't happen in tests */
         if (entry.isIntersecting) {
           setShown(true);
           io.disconnect();

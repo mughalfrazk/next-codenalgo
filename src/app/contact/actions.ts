@@ -23,6 +23,7 @@ export async function submitContact(
     const errors: ContactState["errors"] = {};
     for (const issue of parsed.error.issues) {
       const key = issue.path[0] as keyof typeof errors;
+      /* v8 ignore next -- path[0] always present for field-level Zod errors */
       if (key && !errors[key]) errors[key] = issue.message;
     }
     return { ok: false, message: "Please fix the highlighted fields.", errors };

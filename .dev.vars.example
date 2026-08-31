@@ -1,5 +1,0 @@
-# Copy to .dev.vars for local Cloudflare Workers dev (wrangler / opennextjs preview).
-# In production these are set as encrypted Worker secrets, not from this file.
-RESEND_API_KEY=
-CONTACT_FROM_EMAIL="Code & Algo <onboarding@resend.dev>"
-CONTACT_TO_EMAIL=info@codenalgo.com

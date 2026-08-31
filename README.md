@@ -96,9 +96,9 @@ Config lives in `wrangler.jsonc` and `open-next.config.ts`.
 ### Or deploy from the CLI
 
 ```bash
-yarn dlx wrangler login      # once
-yarn deploy                  # build + publish
-yarn dlx wrangler secret put RESEND_API_KEY   # add secrets
+yarn wrangler login      # once
+yarn deploy              # build + publish
+yarn wrangler secret put RESEND_API_KEY   # add secrets
 ```
 
 For local Worker dev, copy `.dev.vars.example` → `.dev.vars` and fill in secrets.
