@@ -1,0 +1,7 @@
+.next
+.open-next
+node_modules
+coverage
+yarn.lock
+next-env.d.ts
+cloudflare-env.d.ts
