@@ -1,6 +1,6 @@
 export const site = {
   name: 'Code & Algo',
-  tagline: "Software development and IT consultancy for teams building what's next.",
+  tagline: 'Software development and IT consultancy services',
   email: 'info@codenalgo.com',
   phone: '+44 774 206 9713',
   address: '124 City Road, London HA9 0AL, UK',
