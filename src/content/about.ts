@@ -28,12 +28,12 @@ export const missionVision = [
   {
     title: 'Our Mission',
     desc: 'To enable businesses to thrive with smart, scalable, high-performing digital solutions — integrating deep technical know-how with agile execution to solve real-world problems.',
-    gradient: 'linear-gradient(135deg,#8B7CF6,#6EC6FF)',
+    gradient: 'linear-gradient(135deg,#386cea,#4A6FD8)',
   },
   {
     title: 'Our Vision',
     desc: "To be a world leader in AI-first product development, building technology that meets today's needs while anticipating tomorrow's possibilities.",
-    gradient: 'linear-gradient(135deg,#6EC6FF,#FF9EC4)',
+    gradient: 'linear-gradient(135deg,#4A6FD8,#6C8FF5)',
   },
 ]
 

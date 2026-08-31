@@ -1,9 +1,10 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
-import { nav, site } from '@/content/site'
+import { nav } from '@/content/site'
 
 function isActive(pathname: string, href: string) {
   if (href === '/') return pathname === '/'
@@ -17,8 +18,24 @@ export function Navbar() {
   return (
     <header className="relative z-20">
       <nav className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-[22px] sm:px-10 lg:px-16">
-        <Link href="/" className="text-[20px] font-bold text-ink">
-          {site.name}
+        <Link href="/" aria-label="Code &amp; Algo home" className="flex items-center gap-[11px]">
+          <Image
+            src="/logo-icon.jpg"
+            alt=""
+            width={36}
+            height={36}
+            className="h-9 w-9 rounded-[10px] object-cover shadow-[0_4px_14px_rgba(56,108,234,.22)]"
+            priority
+          />
+          <span
+            className="text-[18px] text-ink"
+            style={{
+              fontFamily: 'var(--font-archivo-black), sans-serif',
+              letterSpacing: '0.005em',
+            }}
+          >
+            CODE &amp; ALGO
+          </span>
         </Link>
 
         {/* Desktop pill nav */}
@@ -69,9 +86,7 @@ export function Navbar() {
                 href={item.href}
                 onClick={() => setOpen(false)}
                 className={`rounded-xl px-4 py-3 text-[15px] font-semibold ${
-                  isActive(pathname, item.href)
-                    ? 'bg-[rgba(139,124,246,.12)] text-ink'
-                    : 'text-muted'
+                  isActive(pathname, item.href) ? 'bg-brand-tint text-ink' : 'text-muted'
                 }`}
               >
                 {item.label}

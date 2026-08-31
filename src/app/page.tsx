@@ -74,9 +74,9 @@ export default function HomePage() {
               Discover More →
             </Link>
           </Reveal>
-          <div className="glass relative h-[320px] overflow-hidden rounded-3xl shadow-[0_20px_50px_rgba(139,124,246,.18)]">
+          <div className="glass relative h-[320px] overflow-hidden rounded-3xl shadow-[0_20px_50px_rgba(56,108,234,.18)]">
             <div className="absolute top-10 left-10 h-20 w-20 rounded-3xl bg-brand-gradient opacity-70" />
-            <div className="absolute right-[60px] bottom-[50px] h-[120px] w-[120px] rounded-full opacity-60 [background:linear-gradient(135deg,#FF9EC4,#8B7CF6)]" />
+            <div className="absolute right-[60px] bottom-[50px] h-[120px] w-[120px] rounded-full opacity-60 [background:linear-gradient(135deg,#6C8FF5,#386cea)]" />
           </div>
         </div>
       </Section>

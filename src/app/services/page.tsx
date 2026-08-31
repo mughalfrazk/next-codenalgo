@@ -69,7 +69,7 @@ export default function ServicesPage() {
                   {sv.stack.map((tech) => (
                     <span
                       key={tech}
-                      className="rounded-full bg-[rgba(139,124,246,.12)] px-3 py-1.5 text-[11px] font-semibold text-muted"
+                      className="rounded-full bg-brand-tint px-3 py-1.5 text-[11px] font-semibold text-muted"
                     >
                       {tech}
                     </span>

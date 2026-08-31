@@ -63,7 +63,7 @@ describe('Faq', () => {
 describe('Navbar', () => {
   it('renders the site name', () => {
     render(<Navbar />)
-    expect(screen.getAllByText('Code & Algo').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('CODE & ALGO').length).toBeGreaterThan(0)
   })
 
   it('renders desktop nav links', () => {
