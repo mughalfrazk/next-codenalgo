@@ -1,12 +1,11 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /*
  * Code & Algo design tokens — extracted from the Claude Design source.
  * Brand gradient: linear-gradient(135deg,#8B7CF6,#6EC6FF)
  */
 @theme {
-  --font-sans: var(--font-jakarta), "Plus Jakarta Sans", ui-sans-serif, system-ui,
-    sans-serif;
+  --font-sans: var(--font-jakarta), 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
 
   --color-canvas: #f5f4fb;
   --color-ink: #23222b;

@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { Reveal } from "./Reveal";
-import type { Service } from "@/content/services";
+import Link from 'next/link'
+import { Reveal } from './Reveal'
+import type { Service } from '@/content/services'
 
 /** Compact service card used in the Home services grid. */
 export function ServiceCard({ service, delay = 0 }: { service: Service; delay?: number }) {
@@ -29,5 +29,5 @@ export function ServiceCard({ service, delay = 0 }: { service: Service; delay?: 
         </div>
       </Link>
     </Reveal>
-  );
+  )
 }

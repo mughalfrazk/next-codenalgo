@@ -1,44 +1,36 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { notFound } from "next/navigation";
-import { Container, Section } from "@/components/Section";
-import { Eyebrow } from "@/components/Eyebrow";
-import { GradientButton } from "@/components/GradientButton";
-import { Reveal } from "@/components/Reveal";
-import { Faq } from "@/components/Faq";
-import { CtaBand } from "@/components/CtaBand";
-import { getService, relatedServices, services } from "@/content/services";
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
+import { Container, Section } from '@/components/Section'
+import { Eyebrow } from '@/components/Eyebrow'
+import { GradientButton } from '@/components/GradientButton'
+import { Reveal } from '@/components/Reveal'
+import { Faq } from '@/components/Faq'
+import { CtaBand } from '@/components/CtaBand'
+import { getService, relatedServices, services } from '@/content/services'
 
-type Params = { slug: string };
+type Params = { slug: string }
 
 export function generateStaticParams(): Params[] {
-  return services.map((s) => ({ slug: s.slug }));
+  return services.map((s) => ({ slug: s.slug }))
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<Params>;
-}): Promise<Metadata> {
-  const { slug } = await params;
-  const service = getService(slug);
-  if (!service) return {};
+export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
+  const { slug } = await params
+  const service = getService(slug)
+  if (!service) return {}
   return {
     title: service.title,
     description: service.heroSubtitle,
-  };
+  }
 }
 
-export default async function ServiceDetailPage({
-  params,
-}: {
-  params: Promise<Params>;
-}) {
-  const { slug } = await params;
-  const service = getService(slug);
-  if (!service) notFound();
+export default async function ServiceDetailPage({ params }: { params: Promise<Params> }) {
+  const { slug } = await params
+  const service = getService(slug)
+  if (!service) notFound()
 
-  const related = relatedServices(slug);
+  const related = relatedServices(slug)
 
   return (
     <>
@@ -47,11 +39,11 @@ export default async function ServiceDetailPage({
         <nav aria-label="Breadcrumb" className="mb-[22px] text-[13px] font-semibold text-muted-2">
           <Link href="/" className="hover:text-ink">
             Home
-          </Link>{" "}
-          /{" "}
+          </Link>{' '}
+          /{' '}
           <Link href="/services" className="hover:text-ink">
             Services
-          </Link>{" "}
+          </Link>{' '}
           / <span className="text-ink">{service.title}</span>
         </nav>
         <h1 className="mb-5 max-w-[760px] text-[34px] leading-[1.15] font-extrabold text-ink sm:text-[46px]">
@@ -114,11 +106,7 @@ export default async function ServiceDetailPage({
         <Eyebrow className="mb-4">Key Benefits</Eyebrow>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {service.benefits.map((bn, i) => (
-            <Reveal
-              key={i}
-              delay={(i % 2) * 80}
-              className="glass flex gap-3.5 rounded-[18px] p-5"
-            >
+            <Reveal key={i} delay={(i % 2) * 80} className="glass flex gap-3.5 rounded-[18px] p-5">
               <div className="text-[16px] font-bold text-brand">✓</div>
               <div className="text-[14px] leading-[1.6] font-medium text-ink">{bn}</div>
             </Reveal>
@@ -185,5 +173,5 @@ export default async function ServiceDetailPage({
 
       <CtaBand title="Need to Talk It Through?" ctaLabel="Book a Call" />
     </>
-  );
+  )
 }

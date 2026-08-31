@@ -1,18 +1,18 @@
-"use client";
+'use client'
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { nav, site } from "@/content/site";
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { useState } from 'react'
+import { nav, site } from '@/content/site'
 
 function isActive(pathname: string, href: string) {
-  if (href === "/") return pathname === "/";
-  return pathname === href || pathname.startsWith(`${href}/`);
+  if (href === '/') return pathname === '/'
+  return pathname === href || pathname.startsWith(`${href}/`)
 }
 
 export function Navbar() {
-  const pathname = usePathname();
-  const [open, setOpen] = useState(false);
+  const pathname = usePathname()
+  const [open, setOpen] = useState(false)
 
   return (
     <header className="relative z-20">
@@ -28,7 +28,7 @@ export function Navbar() {
               key={item.href}
               href={item.href}
               className={`text-[14px] font-semibold ${
-                isActive(pathname, item.href) ? "text-ink" : "text-muted hover:text-ink"
+                isActive(pathname, item.href) ? 'text-ink' : 'text-muted hover:text-ink'
               }`}
             >
               {item.label}
@@ -54,7 +54,7 @@ export function Navbar() {
           className="glass flex h-11 w-11 items-center justify-center rounded-full lg:hidden"
         >
           <span className="text-[18px] text-ink" aria-hidden>
-            {open ? "✕" : "☰"}
+            {open ? '✕' : '☰'}
           </span>
         </button>
       </nav>
@@ -69,7 +69,9 @@ export function Navbar() {
                 href={item.href}
                 onClick={() => setOpen(false)}
                 className={`rounded-xl px-4 py-3 text-[15px] font-semibold ${
-                  isActive(pathname, item.href) ? "bg-[rgba(139,124,246,.12)] text-ink" : "text-muted"
+                  isActive(pathname, item.href)
+                    ? 'bg-[rgba(139,124,246,.12)] text-ink'
+                    : 'text-muted'
                 }`}
               >
                 {item.label}
@@ -86,5 +88,5 @@ export function Navbar() {
         </div>
       )}
     </header>
-  );
+  )
 }

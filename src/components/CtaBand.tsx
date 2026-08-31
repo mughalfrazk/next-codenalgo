@@ -1,17 +1,17 @@
-import { GradientButton } from "./GradientButton";
-import { Section } from "./Section";
+import { GradientButton } from './GradientButton'
+import { Section } from './Section'
 
 /** The recurring centered "ready to…" call-to-action card. */
 export function CtaBand({
   title,
   subtitle,
   ctaLabel,
-  ctaHref = "/contact",
+  ctaHref = '/contact',
 }: {
-  title: string;
-  subtitle?: string;
-  ctaLabel: string;
-  ctaHref?: string;
+  title: string
+  subtitle?: string
+  ctaLabel: string
+  ctaHref?: string
 }) {
   return (
     <Section className="text-center">
@@ -27,5 +27,5 @@ export function CtaBand({
         <GradientButton href={ctaHref}>{ctaLabel}</GradientButton>
       </div>
     </Section>
-  );
+  )
 }

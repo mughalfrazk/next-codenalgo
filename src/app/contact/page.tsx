@@ -1,16 +1,16 @@
-import type { Metadata } from "next";
-import { Container, Section } from "@/components/Section";
-import { PageHero } from "@/components/PageHero";
-import { Eyebrow } from "@/components/Eyebrow";
-import { Faq } from "@/components/Faq";
-import { ContactForm } from "@/components/ContactForm";
-import { contactFaq, contactHero } from "@/content/contact";
-import { site, socials } from "@/content/site";
+import type { Metadata } from 'next'
+import { Container, Section } from '@/components/Section'
+import { PageHero } from '@/components/PageHero'
+import { Eyebrow } from '@/components/Eyebrow'
+import { Faq } from '@/components/Faq'
+import { ContactForm } from '@/components/ContactForm'
+import { contactFaq, contactHero } from '@/content/contact'
+import { site, socials } from '@/content/site'
 
 export const metadata: Metadata = {
-  title: "Contact",
+  title: 'Contact',
   description: contactHero.subtitle,
-};
+}
 
 export default function ContactPage() {
   return (
@@ -45,7 +45,7 @@ export default function ContactPage() {
                 {site.email}
               </a>
               <a
-                href={`tel:${site.phone.replace(/\s/g, "")}`}
+                href={`tel:${site.phone.replace(/\s/g, '')}`}
                 className="mb-2.5 block text-[14px] font-medium text-muted hover:text-ink"
               >
                 {site.phone}
@@ -73,8 +73,8 @@ export default function ContactPage() {
                 className="absolute inset-0"
                 style={{
                   backgroundImage:
-                    "linear-gradient(rgba(139,124,246,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(139,124,246,.12) 1px,transparent 1px)",
-                  backgroundSize: "24px 24px",
+                    'linear-gradient(rgba(139,124,246,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(139,124,246,.12) 1px,transparent 1px)',
+                  backgroundSize: '24px 24px',
                 }}
               />
               <div className="absolute top-1/2 left-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-gradient shadow-[0_0_0_8px_rgba(139,124,246,.2)]" />
@@ -98,5 +98,5 @@ export default function ContactPage() {
         </div>
       </Section>
     </>
-  );
+  )
 }

@@ -1,32 +1,35 @@
-import { afterEach, vi } from "vitest";
-import { cleanup } from "@testing-library/react";
+import { afterEach, vi } from 'vitest'
+import { cleanup } from '@testing-library/react'
 
 // Cleanup RTL renders after each test
-afterEach(() => cleanup());
+afterEach(() => cleanup())
 
 // IntersectionObserver is not available in jsdom — must be a class (not arrow fn)
 class MockIntersectionObserver {
-  private cb: IntersectionObserverCallback;
+  private cb: IntersectionObserverCallback
   observe = vi.fn().mockImplementation((el: Element) => {
-    this.cb([{ isIntersecting: true, target: el } as IntersectionObserverEntry], this as unknown as IntersectionObserver);
-  });
-  disconnect = vi.fn();
-  unobserve = vi.fn();
+    this.cb(
+      [{ isIntersecting: true, target: el } as IntersectionObserverEntry],
+      this as unknown as IntersectionObserver
+    )
+  })
+  disconnect = vi.fn()
+  unobserve = vi.fn()
   constructor(cb: IntersectionObserverCallback) {
-    this.cb = cb;
+    this.cb = cb
   }
 }
-global.IntersectionObserver = MockIntersectionObserver as unknown as typeof IntersectionObserver;
+global.IntersectionObserver = MockIntersectionObserver as unknown as typeof IntersectionObserver
 
 // requestAnimationFrame completes animation in a single tick (p >= 1 always)
 global.requestAnimationFrame = vi.fn().mockImplementation((cb: FrameRequestCallback) => {
-  cb(performance.now() + 999_999);
-  return 1;
-});
-global.cancelAnimationFrame = vi.fn();
+  cb(performance.now() + 999_999)
+  return 1
+})
+global.cancelAnimationFrame = vi.fn()
 
 // matchMedia is not available in jsdom
-Object.defineProperty(window, "matchMedia", {
+Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: vi.fn().mockImplementation((query: string) => ({
     matches: false,
@@ -38,4 +41,4 @@ Object.defineProperty(window, "matchMedia", {
     removeEventListener: vi.fn(),
     dispatchEvent: vi.fn(),
   })),
-});
+})

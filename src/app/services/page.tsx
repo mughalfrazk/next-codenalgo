@@ -1,23 +1,18 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { Section } from "@/components/Section";
-import { PageHero } from "@/components/PageHero";
-import { Eyebrow } from "@/components/Eyebrow";
-import { Reveal } from "@/components/Reveal";
-import { Faq } from "@/components/Faq";
-import { CtaBand } from "@/components/CtaBand";
-import {
-  engagementModels,
-  services,
-  servicesFaq,
-  servicesWhyChoose,
-} from "@/content/services";
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import { Section } from '@/components/Section'
+import { PageHero } from '@/components/PageHero'
+import { Eyebrow } from '@/components/Eyebrow'
+import { Reveal } from '@/components/Reveal'
+import { Faq } from '@/components/Faq'
+import { CtaBand } from '@/components/CtaBand'
+import { engagementModels, services, servicesFaq, servicesWhyChoose } from '@/content/services'
 
 export const metadata: Metadata = {
-  title: "Services",
+  title: 'Services',
   description:
-    "Custom software, enterprise systems, and intelligent automation — delivered end to end.",
-};
+    'Custom software, enterprise systems, and intelligent automation — delivered end to end.',
+}
 
 export default function ServicesPage() {
   return (
@@ -139,5 +134,5 @@ export default function ServicesPage() {
         ctaLabel="Talk to an Expert"
       />
     </>
-  );
+  )
 }

@@ -1,7 +1,7 @@
-import Link from "next/link";
-import { Container } from "./Section";
-import { footerCompany, site } from "@/content/site";
-import { services } from "@/content/services";
+import Link from 'next/link'
+import { Container } from './Section'
+import { footerCompany, site } from '@/content/site'
+import { services } from '@/content/services'
 
 export function Footer() {
   return (
@@ -56,7 +56,7 @@ export function Footer() {
               {site.email}
             </a>
             <a
-              href={`tel:${site.phone.replace(/\s/g, "")}`}
+              href={`tel:${site.phone.replace(/\s/g, '')}`}
               className="mb-2.5 block text-[13px] font-medium text-muted hover:text-ink"
             >
               {site.phone}
@@ -74,5 +74,5 @@ export function Footer() {
         </div>
       </Container>
     </footer>
-  );
+  )
 }

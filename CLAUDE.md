@@ -16,9 +16,9 @@ yarn deploy       # OpenNext Cloudflare build + deploy to Cloudflare Workers
 yarn cf-typegen   # regenerate cloudflare-env.d.ts from wrangler.jsonc bindings
 ```
 
-yarn test            # run all tests once (Vitest)
-yarn test:watch      # watch mode
-yarn test:coverage   # run with 100% coverage enforcement (v8)
+yarn test # run all tests once (Vitest)
+yarn test:watch # watch mode
+yarn test:coverage # run with 100% coverage enforcement (v8)
 
 ## Architecture
 
@@ -35,11 +35,11 @@ yarn test:coverage   # run with 100% coverage enforcement (v8)
 
 ### Environment variables
 
-| Variable | Purpose |
-|---|---|
-| `RESEND_API_KEY` | Resend API key for contact-form email delivery |
+| Variable             | Purpose                                              |
+| -------------------- | ---------------------------------------------------- |
+| `RESEND_API_KEY`     | Resend API key for contact-form email delivery       |
 | `CONTACT_FROM_EMAIL` | Sender address (defaults to `onboarding@resend.dev`) |
-| `CONTACT_TO_EMAIL` | Recipient address (defaults to `site.email`) |
+| `CONTACT_TO_EMAIL`   | Recipient address (defaults to `site.email`)         |
 
 For local dev, copy `.env.example` → `.env.local`. For Cloudflare, use `wrangler secret put <VAR>`.
 

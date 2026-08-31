@@ -1,6 +1,6 @@
-import { CountUp } from "./CountUp";
-import { Reveal } from "./Reveal";
-import type { Stat } from "@/content/home";
+import { CountUp } from './CountUp'
+import { Reveal } from './Reveal'
+import type { Stat } from '@/content/home'
 
 /** Row of glass stat cards with animated count-up numbers. */
 export function StatsRow({ stats }: { stats: Stat[] }) {
@@ -19,5 +19,5 @@ export function StatsRow({ stats }: { stats: Stat[] }) {
         </Reveal>
       ))}
     </div>
-  );
+  )
 }
