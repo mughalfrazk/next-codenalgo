@@ -14,6 +14,8 @@
     "prepare": "husky",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "deploy:preview": "opennextjs-cloudflare build && opennextjs-cloudflare deploy --env preview",
+    "deploy:production": "opennextjs-cloudflare build && opennextjs-cloudflare deploy --env production",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -29,6 +31,13 @@
     ]
   },
   "dependencies": {
+    "@mantine/core": "^9.6.0",
+    "@mantine/form": "^9.6.0",
+    "@mantine/hooks": "^9.6.0",
+    "@mantine/notifications": "^9.6.0",
+    "@phosphor-icons/react": "^2.1.10",
+    "@tanstack/react-query": "^5.102.8",
+    "firebase": "^12.18.0",
     "next": "16.2.10",
     "react": "19.2.4",
     "react-dom": "19.2.4",

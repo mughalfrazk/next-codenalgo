@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { contactSchema } from '@/app/contact/schema'
+import { contactSchema } from '@/app/(site)/contact/schema'
 
 const valid = {
   name: 'Abdul Rasheed',

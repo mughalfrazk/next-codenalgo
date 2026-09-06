@@ -1,0 +1,167 @@
+/* Admin panel design tokens — scoped to /admin only. Do not import from the public site. */
+
+:root,
+[data-mantine-color-scheme='light'] {
+  --admin-bg: #f3f5fc;
+  --admin-surface: #ffffff;
+  --admin-surface-alt: #f7f8fd;
+  --admin-border: rgba(42, 46, 82, 0.1);
+  --admin-text: #2a2e52;
+  --admin-muted: #585676;
+  --admin-accent: #386cea;
+  --admin-accent-soft: rgba(56, 108, 234, 0.1);
+  --admin-shadow: 0 4px 16px rgba(56, 108, 234, 0.1);
+}
+
+[data-mantine-color-scheme='dark'] {
+  --admin-bg: #1e1e1e;
+  --admin-surface: #252526;
+  --admin-surface-alt: #2d2d30;
+  --admin-border: rgba(255, 255, 255, 0.09);
+  --admin-text: #d4d4d4;
+  --admin-muted: #9098a0;
+  --admin-accent: #6fa8ff;
+  --admin-accent-soft: rgba(111, 168, 255, 0.16);
+  --admin-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.admin-root {
+  background: var(--admin-bg);
+  color: var(--admin-text);
+  min-height: 100vh;
+}
+
+.admin-logo-word {
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--admin-text);
+}
+
+.admin-muted {
+  color: var(--admin-muted) !important;
+}
+
+.admin-card {
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border);
+  border-radius: 16px;
+  box-shadow: var(--admin-shadow);
+}
+
+.admin-surface-alt {
+  background: var(--admin-surface-alt) !important;
+}
+
+.admin-pill {
+  border-radius: 20px;
+  padding: 3px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.admin-pill-accent {
+  background: var(--admin-accent-soft);
+  color: var(--admin-accent);
+}
+
+.admin-pill-muted {
+  background: var(--admin-surface-alt);
+  color: var(--admin-muted);
+  border: 1px solid var(--admin-border);
+}
+
+.admin-pill-danger {
+  background: rgba(224, 49, 49, 0.12);
+  color: #e03131;
+}
+
+.admin-gradient-btn {
+  background: linear-gradient(135deg, #386cea, #4a6fd8) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 10px !important;
+  box-shadow: 0 10px 26px rgba(56, 108, 234, 0.3) !important;
+}
+
+.admin-outline-btn {
+  background: var(--admin-surface) !important;
+  color: var(--admin-text) !important;
+  border: 1px solid var(--admin-border) !important;
+  border-radius: 10px !important;
+}
+
+.admin-icon-btn {
+  background: var(--admin-surface-alt);
+  border: 1px solid var(--admin-border);
+  border-radius: 9px;
+  color: var(--admin-text);
+}
+
+.admin-table-head th {
+  background: var(--admin-surface-alt) !important;
+  color: var(--admin-muted) !important;
+  text-transform: uppercase;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--admin-border) !important;
+}
+
+.admin-table-body td {
+  border-top: 1px solid var(--admin-border) !important;
+  color: var(--admin-text);
+}
+
+.admin-nav-item {
+  border-radius: 10px !important;
+  color: var(--admin-muted) !important;
+}
+
+.admin-nav-item.admin-nav-active {
+  background: var(--admin-accent-soft) !important;
+  color: var(--admin-accent) !important;
+  font-weight: 600;
+}
+
+.admin-nav-item-collapsed .mantine-NavLink-body {
+  display: none;
+}
+
+.admin-nav-item-collapsed .mantine-NavLink-section {
+  margin-right: 0;
+}
+
+.admin-nav-item-collapsed {
+  justify-content: center;
+}
+
+.admin-input input,
+.admin-input textarea,
+.admin-input .mantine-Select-input,
+.admin-input .mantine-TagsInput-input {
+  background: var(--admin-surface-alt);
+  border: 1px solid var(--admin-border);
+  border-radius: 10px;
+  color: var(--admin-text);
+}
+
+.admin-input label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--admin-muted);
+}
+
+.admin-stat-value {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--admin-text);
+}
+
+.admin-heading {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--admin-text);
+}

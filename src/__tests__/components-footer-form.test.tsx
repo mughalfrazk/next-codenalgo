@@ -18,12 +18,12 @@ vi.mock('next/link', () => ({
 }))
 
 // Mock the server action so ContactForm doesn't hit the network
-vi.mock('@/app/contact/actions', () => ({
+vi.mock('@/app/(site)/contact/actions', () => ({
   submitContact: vi.fn(),
 }))
 
 // Provide a controllable useActionState so we can test error + success states
-let mockFormState: import('@/app/contact/schema').ContactState = { ok: false }
+let mockFormState: import('@/app/(site)/contact/schema').ContactState = { ok: false }
 let mockPending = false
 vi.mock('react', async (importOriginal) => {
   const actual = await importOriginal<typeof import('react')>()
@@ -42,30 +42,32 @@ vi.mock('react-dom', async (importOriginal) => {
 
 import { Footer } from '@/components/Footer'
 import { ContactForm } from '@/components/ContactForm'
-import { site } from '@/content/site'
+import { getDefaultSiteSettings } from '@/data/siteSettings'
+
+const settings = getDefaultSiteSettings()
 
 describe('Footer', () => {
   it('renders the site name and tagline', () => {
-    render(<Footer />)
+    render(<Footer settings={settings} />)
     expect(screen.getAllByText('CODE & ALGO').length).toBeGreaterThan(0)
-    expect(screen.getByText(site.tagline)).toBeDefined()
+    expect(screen.getByText(settings.tagline)).toBeDefined()
   })
 
   it('renders contact email and phone links', () => {
-    render(<Footer />)
-    expect(screen.getAllByRole('link', { name: site.email }).length).toBeGreaterThan(0)
-    expect(screen.getAllByRole('link', { name: site.phone }).length).toBeGreaterThan(0)
+    render(<Footer settings={settings} />)
+    expect(screen.getAllByRole('link', { name: settings.email }).length).toBeGreaterThan(0)
+    expect(screen.getAllByRole('link', { name: settings.phone }).length).toBeGreaterThan(0)
   })
 
   it('renders service links from the services array', () => {
-    render(<Footer />)
+    render(<Footer settings={settings} />)
     const links = screen.getAllByRole('link')
     expect(links.length).toBeGreaterThan(0)
   })
 
   it('renders legal text', () => {
-    render(<Footer />)
-    expect(screen.getAllByText(site.legal).length).toBeGreaterThan(0)
+    render(<Footer settings={settings} />)
+    expect(screen.getAllByText(settings.legal).length).toBeGreaterThan(0)
   })
 })
 

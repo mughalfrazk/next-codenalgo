@@ -2,8 +2,8 @@
 
 import { useActionState } from 'react'
 import { useFormStatus } from 'react-dom'
-import { submitContact } from '@/app/contact/actions'
-import type { ContactState } from '@/app/contact/schema'
+import { submitContact } from '@/app/(site)/contact/actions'
+import type { ContactState } from '@/app/(site)/contact/schema'
 import { budgetOptions, serviceOptions } from '@/content/contact'
 
 const initialState: ContactState = { ok: false }

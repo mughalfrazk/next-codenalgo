@@ -13,5 +13,14 @@
   },
   // Secrets (RESEND_API_KEY, CONTACT_FROM_EMAIL, CONTACT_TO_EMAIL) are NOT set
   // here — add them as encrypted secrets via the dashboard or:
-  //   wrangler secret put RESEND_API_KEY
+  //   wrangler secret put RESEND_API_KEY --env preview
+  //   wrangler secret put RESEND_API_KEY --env production
+  "env": {
+    "preview": {
+      "name": "next-codenalgo-preview",
+    },
+    "production": {
+      "name": "next-codenalgo-production",
+    },
+  },
 }

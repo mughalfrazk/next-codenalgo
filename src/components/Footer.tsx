@@ -1,10 +1,11 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Container } from './Section'
-import { footerCompany, site } from '@/content/site'
+import { footerCompany } from '@/content/site'
 import { services } from '@/content/services'
+import type { SiteSettings } from '@/models/siteSettings'
 
-export function Footer() {
+export function Footer({ settings }: { settings: SiteSettings }) {
   return (
     <footer className="bg-dark-gradient relative z-10 mt-5 pt-[60px] pb-[34px]">
       <Container>
@@ -29,7 +30,7 @@ export function Footer() {
               </span>
             </div>
             <div className="max-w-xs text-[14px] leading-[1.6] font-medium text-white/72">
-              {site.tagline}
+              {settings.tagline}
             </div>
           </div>
 
@@ -68,23 +69,23 @@ export function Footer() {
               Contact
             </div>
             <a
-              href={`mailto:${site.email}`}
+              href={`mailto:${settings.email}`}
               className="mb-2.5 block text-[13px] font-medium text-white/72 hover:text-white"
             >
-              {site.email}
+              {settings.email}
             </a>
             <a
-              href={`tel:${site.phone.replace(/\s/g, '')}`}
+              href={`tel:${settings.phone.replace(/\s/g, '')}`}
               className="mb-2.5 block text-[13px] font-medium text-white/72 hover:text-white"
             >
-              {site.phone}
+              {settings.phone}
             </a>
-            <div className="text-[13px] font-medium text-white/72">{site.addressShort}</div>
+            <div className="text-[13px] font-medium text-white/72">{settings.addressShort}</div>
           </div>
         </div>
 
         <div className="flex flex-col gap-3 border-t border-white/16 pt-6 text-[12px] font-medium text-white/50 sm:flex-row sm:items-center sm:justify-between">
-          <div>{site.legal}</div>
+          <div>{settings.legal}</div>
           <div className="flex gap-5">
             <span>Privacy</span>
             <span>Terms</span>

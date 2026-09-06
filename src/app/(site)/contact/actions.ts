@@ -2,7 +2,7 @@
 
 import { Resend } from 'resend'
 import { contactSchema, type ContactState } from './schema'
-import { site } from '@/content/site'
+import { fetchSiteSettings } from '@/data/siteSettings'
 
 /**
  * Handle a contact-form submission.
@@ -54,9 +54,10 @@ export async function submitContact(
 
   try {
     const resend = new Resend(apiKey)
+    const to = process.env.CONTACT_TO_EMAIL || (await fetchSiteSettings()).email
     const { error } = await resend.emails.send({
       from: process.env.CONTACT_FROM_EMAIL || 'Code & Algo <onboarding@resend.dev>',
-      to: process.env.CONTACT_TO_EMAIL || site.email,
+      to,
       replyTo: data.email,
       subject: `New enquiry from ${data.name}${data.company ? ` (${data.company})` : ''}`,
       text: summary,
