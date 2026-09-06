@@ -9,7 +9,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
   const settings = await fetchSiteSettings()
 
   return (
-    <div className="relative flex min-h-full flex-col overflow-hidden">
+    <div className="relative flex min-h-full flex-col">
       <DefaultBlobs />
       <Navbar />
       <main className="relative flex-1">{children}</main>

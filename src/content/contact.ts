@@ -1,4 +1,4 @@
-import type { QA } from './services'
+import { services, type QA } from './services'
 
 export const contactHero = {
   eyebrow: 'Contact',
@@ -6,14 +6,7 @@ export const contactHero = {
   subtitle: "Tell us what you're building. We'll get back to you within one business day.",
 }
 
-export const serviceOptions = [
-  'AI / ML Solutions',
-  'Custom Software',
-  'Enterprise Solutions',
-  'Staff Augmentation',
-  'Managed Infrastructure',
-  'Other',
-]
+export const serviceOptions = [...services.map((s) => s.title), 'Other']
 
 export const budgetOptions = ['Under $25k', '$25k – $100k', '$100k – $250k', '$250k+']
 
