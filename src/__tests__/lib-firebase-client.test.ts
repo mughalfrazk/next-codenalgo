@@ -13,7 +13,7 @@ vi.mock('firebase/app', () => ({
 vi.mock('firebase/auth', () => ({
   getAuth: (...args: unknown[]) => mockGetAuth(...args),
 }))
-vi.mock('firebase/firestore', () => ({
+vi.mock('firebase/firestore/lite', () => ({
   getFirestore: (...args: unknown[]) => mockGetFirestore(...args),
 }))
 
