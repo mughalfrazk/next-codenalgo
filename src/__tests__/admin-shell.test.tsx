@@ -71,4 +71,21 @@ describe('AdminShell', () => {
     fireEvent.click(screen.getByText('Sign out'))
     expect(mockSignOut).toHaveBeenCalled()
   })
+
+  it('collapses and expands the sidebar when the toggle is clicked', () => {
+    pathname = '/admin'
+    authState = { user: { uid: 'u1' }, loading: false }
+    renderShell()
+    fireEvent.click(screen.getByLabelText('Toggle sidebar'))
+    expect(screen.queryByText('Site Settings')).toBeNull()
+    fireEvent.click(screen.getByLabelText('Toggle sidebar'))
+    expect(screen.getByText('Site Settings')).toBeTruthy()
+  })
+
+  it('toggles the color scheme when the theme control is clicked', () => {
+    pathname = '/admin'
+    authState = { user: { uid: 'u1' }, loading: false }
+    renderShell()
+    fireEvent.click(screen.getByLabelText('Toggle color scheme'))
+  })
 })

@@ -16,7 +16,7 @@ const settings: SiteSettings = {
   businessHours: 'hours',
   url: 'https://example.com',
   legal: 'legal',
-  socials: [],
+  socials: [{ label: 'LinkedIn', short: 'in', href: 'https://linkedin.com/company/codenalgo' }],
 }
 
 const mockFetch = vi.fn().mockResolvedValue(settings)
@@ -72,5 +72,31 @@ describe('SiteSettingsForm', () => {
     mockFetch.mockRejectedValueOnce('offline')
     renderForm()
     expect(await screen.findByText(/something went wrong/i)).toBeTruthy()
+  })
+
+  it('builds social hrefs, prefixing bare handles and keeping full URLs as-is', async () => {
+    renderForm()
+    await screen.findByDisplayValue('Code & Algo')
+    fireEvent.change(screen.getByLabelText('LinkedIn'), {
+      target: { value: 'linkedin.com/company/codenalgo' },
+    })
+    fireEvent.change(screen.getByLabelText('Facebook'), {
+      target: { value: 'https://facebook.com/codenalgo' },
+    })
+    fireEvent.click(screen.getByRole('button', { name: /save changes/i }))
+    await waitFor(() =>
+      expect(mockSave).toHaveBeenCalledWith(
+        expect.objectContaining({
+          socials: [
+            {
+              label: 'LinkedIn',
+              short: 'in',
+              href: 'https://linkedin.com/company/codenalgo',
+            },
+            { label: 'Facebook', short: 'fb', href: 'https://facebook.com/codenalgo' },
+          ],
+        })
+      )
+    )
   })
 })
