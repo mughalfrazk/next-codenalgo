@@ -4,7 +4,7 @@ const mockGetDoc = vi.fn()
 const mockSetDoc = vi.fn().mockResolvedValue(undefined)
 const mockDoc = vi.fn().mockReturnValue({ id: 'default' })
 
-vi.mock('firebase/firestore', () => ({
+vi.mock('firebase/firestore/lite', () => ({
   doc: (...args: unknown[]) => mockDoc(...args),
   getDoc: (...args: unknown[]) => mockGetDoc(...args),
   setDoc: (...args: unknown[]) => mockSetDoc(...args),

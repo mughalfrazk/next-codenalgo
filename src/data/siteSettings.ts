@@ -1,4 +1,4 @@
-import { doc, getDoc, setDoc } from 'firebase/firestore'
+import { doc, getDoc, setDoc } from 'firebase/firestore/lite'
 import { getFirebaseDb, isFirebaseConfigured } from '@/lib/firebase/client'
 import { SITE_SETTINGS_DOC_ID, type SiteSettings, siteSettingsSchema } from '@/models/siteSettings'
 import { site, socials } from '@/content/site'
