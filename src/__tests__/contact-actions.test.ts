@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { submitContact } from '@/app/contact/actions'
-import type { ContactState } from '@/app/contact/schema'
+import { submitContact } from '@/app/(site)/contact/actions'
+import type { ContactState } from '@/app/(site)/contact/schema'
 
 const mockSend = vi.fn().mockResolvedValue({ error: null })
 
@@ -11,6 +11,10 @@ vi.mock('resend', () => {
     },
   }
 })
+
+vi.mock('@/data/siteSettings', () => ({
+  fetchSiteSettings: vi.fn().mockResolvedValue({ email: 'hello@codenalgo.com' }),
+}))
 
 const initialState: ContactState = { ok: false }
 

@@ -1,18 +1,33 @@
 import type { Metadata } from 'next'
+import {
+  FacebookLogoIcon,
+  InstagramLogoIcon,
+  LinkedinLogoIcon,
+} from '@phosphor-icons/react/dist/ssr'
 import { Container, Section } from '@/components/Section'
 import { PageHero } from '@/components/PageHero'
 import { Eyebrow } from '@/components/Eyebrow'
 import { Faq } from '@/components/Faq'
 import { ContactForm } from '@/components/ContactForm'
 import { contactFaq, contactHero } from '@/content/contact'
-import { site, socials } from '@/content/site'
+import { fetchSiteSettings } from '@/data/siteSettings'
+
+export const revalidate = 60
+
+const SOCIAL_ICONS: Record<string, typeof LinkedinLogoIcon> = {
+  LinkedIn: LinkedinLogoIcon,
+  Facebook: FacebookLogoIcon,
+  Instagram: InstagramLogoIcon,
+}
 
 export const metadata: Metadata = {
   title: 'Contact',
   description: contactHero.subtitle,
 }
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const site = await fetchSiteSettings()
+
   return (
     <>
       <PageHero
@@ -54,16 +69,19 @@ export default function ContactPage() {
               <div className="mb-1.5 text-[12px] font-semibold text-ink">Business Hours</div>
               <div className="mb-4 text-[13px] font-medium text-muted">{site.businessHours}</div>
               <div className="flex gap-2.5">
-                {socials.map((s) => (
-                  <a
-                    key={s.label}
-                    href={s.href}
-                    aria-label={s.label}
-                    className="flex h-[34px] w-[34px] items-center justify-center rounded-full bg-brand-tint text-[12px] font-bold text-brand"
-                  >
-                    {s.short}
-                  </a>
-                ))}
+                {site.socials.map((s) => {
+                  const Icon = SOCIAL_ICONS[s.label]
+                  return (
+                    <a
+                      key={s.label}
+                      href={s.href}
+                      aria-label={s.label}
+                      className="flex h-[34px] w-[34px] items-center justify-center rounded-full bg-brand-tint text-brand"
+                    >
+                      {Icon ? <Icon size={16} weight="bold" /> : s.short}
+                    </a>
+                  )
+                })}
               </div>
             </div>
 
