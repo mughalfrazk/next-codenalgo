@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { nav } from '@/content/site'
 
 function isActive(pathname: string, href: string) {
@@ -14,9 +14,35 @@ function isActive(pathname: string, href: string) {
 export function Navbar() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({})
+  const [indicator, setIndicator] = useState<{ left: number; width: number } | null>(null)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    const activeItem = nav.find((item) => isActive(pathname, item.href))
+    const el = activeItem ? linkRefs.current[activeItem.href] : null
+    if (el) {
+      setIndicator({ left: el.offsetLeft, width: el.offsetWidth })
+    } else {
+      setIndicator(null)
+    }
+  }, [pathname])
 
   return (
-    <header className="relative z-20">
+    <header
+      className={`sticky top-0 z-20 transition-colors duration-200 ${
+        scrolled
+          ? 'bg-canvas/80 shadow-[0_4px_20px_rgba(56,108,234,.08)] backdrop-blur-md'
+          : 'bg-transparent'
+      }`}
+    >
       <nav className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-[22px] sm:px-10 lg:px-16">
         <Link href="/" aria-label="Code &amp; Algo home" className="flex items-center gap-[11px]">
           <Image
@@ -39,13 +65,22 @@ export function Navbar() {
         </Link>
 
         {/* Desktop pill nav */}
-        <div className="glass hidden items-center gap-9 rounded-full px-7 py-2.5 lg:flex">
+        <div className="glass relative hidden items-center gap-2 rounded-full px-3 py-1.5 lg:flex">
+          {indicator && (
+            <div
+              className="absolute top-1.5 bottom-1.5 rounded-full bg-white/60 shadow-[0_1px_4px_rgba(56,108,234,.1)] transition-[left,width] duration-300 ease-out"
+              style={{ left: indicator.left, width: indicator.width }}
+            />
+          )}
           {nav.map((item) => (
             <Link
               key={item.href}
+              ref={(el) => {
+                linkRefs.current[item.href] = el
+              }}
               href={item.href}
-              className={`text-[14px] font-semibold ${
-                isActive(pathname, item.href) ? 'text-ink' : 'text-muted hover:text-ink'
+              className={`relative rounded-full px-4 py-1.5 text-[14px] font-semibold transition-colors ${
+                isActive(pathname, item.href) ? 'text-brand' : 'text-muted hover:text-ink'
               }`}
             >
               {item.label}

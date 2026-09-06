@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react'
-import { describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 
 vi.mock('next/link', () => ({
   default: ({
@@ -19,8 +19,9 @@ vi.mock('next/link', () => ({
   ),
 }))
 
+let mockPathname = '/'
 vi.mock('next/navigation', () => ({
-  usePathname: () => '/',
+  usePathname: () => mockPathname,
 }))
 
 import { Faq } from '@/components/Faq'
@@ -61,6 +62,10 @@ describe('Faq', () => {
 })
 
 describe('Navbar', () => {
+  afterEach(() => {
+    mockPathname = '/'
+  })
+
   it('renders the site name', () => {
     render(<Navbar />)
     expect(screen.getAllByText('CODE & ALGO').length).toBeGreaterThan(0)
@@ -104,6 +109,20 @@ describe('Navbar', () => {
     // The last one is in the mobile drawer
     fireEvent.click(ctaLinks[ctaLinks.length - 1])
     expect(toggle.getAttribute('aria-expanded')).toBe('false')
+  })
+
+  it('renders without a sliding indicator when no nav item matches the path', () => {
+    mockPathname = '/does-not-exist'
+    render(<Navbar />)
+    expect(screen.getAllByText('CODE & ALGO').length).toBeGreaterThan(0)
+  })
+
+  it('applies the scrolled background once scrolled past the threshold', () => {
+    render(<Navbar />)
+    Object.defineProperty(window, 'scrollY', { value: 50, configurable: true })
+    fireEvent.scroll(window)
+    const header = screen.getByRole('banner')
+    expect(header.className).toContain('bg-canvas/80')
   })
 })
 
