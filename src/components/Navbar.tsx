@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { nav } from '@/content/site'
 
 function isActive(pathname: string, href: string) {
@@ -15,6 +15,8 @@ export function Navbar() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({})
+  const [indicator, setIndicator] = useState<{ left: number; width: number } | null>(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)
@@ -22,6 +24,16 @@ export function Navbar() {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  useEffect(() => {
+    const activeItem = nav.find((item) => isActive(pathname, item.href))
+    const el = activeItem ? linkRefs.current[activeItem.href] : null
+    if (el) {
+      setIndicator({ left: el.offsetLeft, width: el.offsetWidth })
+    } else {
+      setIndicator(null)
+    }
+  }, [pathname])
 
   return (
     <header
@@ -53,15 +65,22 @@ export function Navbar() {
         </Link>
 
         {/* Desktop pill nav */}
-        <div className="glass hidden items-center gap-2 rounded-full px-3 py-1.5 lg:flex">
+        <div className="glass relative hidden items-center gap-2 rounded-full px-3 py-1.5 lg:flex">
+          {indicator && (
+            <div
+              className="absolute top-1.5 bottom-1.5 rounded-full bg-white/60 shadow-[0_1px_4px_rgba(56,108,234,.1)] transition-[left,width] duration-300 ease-out"
+              style={{ left: indicator.left, width: indicator.width }}
+            />
+          )}
           {nav.map((item) => (
             <Link
               key={item.href}
+              ref={(el) => {
+                linkRefs.current[item.href] = el
+              }}
               href={item.href}
-              className={`rounded-full px-4 py-1.5 text-[14px] font-semibold transition-colors ${
-                isActive(pathname, item.href)
-                  ? 'bg-white/60 text-brand shadow-[0_1px_4px_rgba(56,108,234,.1)]'
-                  : 'text-muted hover:text-ink'
+              className={`relative rounded-full px-4 py-1.5 text-[14px] font-semibold transition-colors ${
+                isActive(pathname, item.href) ? 'text-brand' : 'text-muted hover:text-ink'
               }`}
             >
               {item.label}
