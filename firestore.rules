@@ -3,7 +3,7 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     function isAdmin() {
-      return request.auth != null && request.auth.uid == 'c6SQJ8hBalZZSgQx9fJ7lO7Ojtl2';
+      return request.auth != null && request.auth.uid == 'Qz26Tz3wMldTp1DP93vyLjdrfn92';
     }
 
     match /siteSettings/{docId} {
