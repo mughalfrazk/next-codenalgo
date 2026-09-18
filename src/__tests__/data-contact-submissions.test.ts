@@ -17,7 +17,7 @@ const mockDeleteDoc = vi.fn().mockResolvedValue(undefined)
 const mockGetDocs = vi.fn()
 const mockCollection = vi.fn().mockReturnValue({})
 const mockDoc = vi.fn().mockReturnValue({ id: 'sub-1' })
-const mockQuery = vi.fn((ref) => ref)
+const mockQuery = vi.fn((...args: unknown[]) => args[0])
 const mockOrderBy = vi.fn()
 
 vi.mock('firebase/firestore/lite', () => ({
