@@ -41,10 +41,11 @@ src/
     about/page.tsx          About
     services/page.tsx       Services listing
     services/[slug]/page.tsx  Dynamic service detail (one per service, statically generated)
-    contact/
+    (site)/contact/
       page.tsx              Contact
-      actions.ts            'use server' form submission (Zod + Resend)
+      actions.ts            'use server' form submission (Firestore + Resend)
       schema.ts             shared Zod schema + types
+    admin/                  Firebase-authenticated submissions dashboard
   components/               reusable UI (Navbar, Footer, Card, Reveal, CountUp, Faq, …)
   content/                  all copy & data (site, services, home, about, contact)
 ```
@@ -54,16 +55,19 @@ stats, team, FAQs, etc. without touching components.
 
 ## Contact form / email
 
-The contact form works out of the box: without credentials, submissions are
-validated and logged server-side and the user sees the success state — no email
-is sent. To enable real delivery via [Resend](https://resend.com):
+Submissions are validated server-side, then always saved to Firestore and
+surfaced in the admin submissions table. Email delivery via
+[Resend](https://resend.com) is optional — without credentials, the submission
+is still saved and the user sees the success state, but no email is sent. To
+enable real delivery:
 
 1. Copy `.env.example` → `.env.local`
 2. Set `RESEND_API_KEY` (and optionally `CONTACT_FROM_EMAIL` / `CONTACT_TO_EMAIL`).
    The `from` address must be verified in your Resend account.
 
-Validation is enforced server-side in `src/app/contact/actions.ts` regardless of
-whether email delivery is configured.
+Validation is enforced server-side in `src/app/(site)/contact/actions.ts`
+regardless of whether email delivery is configured. See `CLAUDE.md` for
+Firestore rules deployment and admin-panel details.
 
 ## Deploy (Cloudflare)
 

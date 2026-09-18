@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { contactSchema } from '@/app/(site)/contact/schema'
+import { contactSubmissionInputSchema } from '@/models/contactSubmission'
 
 const valid = {
   name: 'Abdul Rasheed',
@@ -8,21 +8,21 @@ const valid = {
   consent: 'on' as const,
 }
 
-describe('contactSchema', () => {
+describe('contactSubmissionInputSchema', () => {
   it('accepts a minimal valid payload', () => {
-    expect(contactSchema.safeParse(valid).success).toBe(true)
+    expect(contactSubmissionInputSchema.safeParse(valid).success).toBe(true)
   })
 
   it("accepts consent as 'true' string", () => {
-    expect(contactSchema.safeParse({ ...valid, consent: 'true' }).success).toBe(true)
+    expect(contactSubmissionInputSchema.safeParse({ ...valid, consent: 'true' }).success).toBe(true)
   })
 
   it('accepts consent as boolean true', () => {
-    expect(contactSchema.safeParse({ ...valid, consent: true }).success).toBe(true)
+    expect(contactSubmissionInputSchema.safeParse({ ...valid, consent: true }).success).toBe(true)
   })
 
   it('accepts optional fields when provided', () => {
-    const result = contactSchema.safeParse({
+    const result = contactSubmissionInputSchema.safeParse({
       ...valid,
       company: 'ACME Ltd',
       phone: '+44 7700 900000',
@@ -33,7 +33,7 @@ describe('contactSchema', () => {
   })
 
   it('accepts empty string for optional fields', () => {
-    const result = contactSchema.safeParse({
+    const result = contactSubmissionInputSchema.safeParse({
       ...valid,
       company: '',
       phone: '',
@@ -44,7 +44,7 @@ describe('contactSchema', () => {
   })
 
   it('rejects name shorter than 2 chars', () => {
-    const result = contactSchema.safeParse({ ...valid, name: 'A' })
+    const result = contactSubmissionInputSchema.safeParse({ ...valid, name: 'A' })
     expect(result.success).toBe(false)
     if (!result.success) {
       expect(result.error.issues[0].message).toBe('Please enter your name.')
@@ -52,7 +52,7 @@ describe('contactSchema', () => {
   })
 
   it('rejects invalid email', () => {
-    const result = contactSchema.safeParse({ ...valid, email: 'not-an-email' })
+    const result = contactSubmissionInputSchema.safeParse({ ...valid, email: 'not-an-email' })
     expect(result.success).toBe(false)
     if (!result.success) {
       expect(result.error.issues[0].message).toBe('Please enter a valid email address.')
@@ -60,7 +60,7 @@ describe('contactSchema', () => {
   })
 
   it('rejects details shorter than 10 chars', () => {
-    const result = contactSchema.safeParse({ ...valid, details: 'Too short' })
+    const result = contactSubmissionInputSchema.safeParse({ ...valid, details: 'Too short' })
     expect(result.success).toBe(false)
     if (!result.success) {
       expect(result.error.issues[0].message).toBe(
@@ -70,7 +70,7 @@ describe('contactSchema', () => {
   })
 
   it('rejects consent as false boolean', () => {
-    const result = contactSchema.safeParse({ ...valid, consent: false })
+    const result = contactSubmissionInputSchema.safeParse({ ...valid, consent: false })
     expect(result.success).toBe(false)
     if (!result.success) {
       expect(result.error.issues[0].message).toBe('Please agree to be contacted.')
@@ -78,12 +78,12 @@ describe('contactSchema', () => {
   })
 
   it("rejects consent as 'off' string", () => {
-    const result = contactSchema.safeParse({ ...valid, consent: 'off' })
+    const result = contactSubmissionInputSchema.safeParse({ ...valid, consent: 'off' })
     expect(result.success).toBe(false)
   })
 
   it('trims whitespace from name', () => {
-    const result = contactSchema.safeParse({ ...valid, name: '  AB  ' })
+    const result = contactSubmissionInputSchema.safeParse({ ...valid, name: '  AB  ' })
     expect(result.success).toBe(true)
     if (result.success) expect(result.data.name).toBe('AB')
   })

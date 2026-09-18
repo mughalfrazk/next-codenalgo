@@ -3,12 +3,23 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     function isAdmin() {
-      return request.auth != null && request.auth.uid == 'c6SQJ8hBalZZSgQx9fJ7lO7Ojtl2';
+      return request.auth != null && request.auth.uid == 'Qz26Tz3wMldTp1DP93vyLjdrfn92';
     }
 
     match /siteSettings/{docId} {
       allow read: if true;
       allow write: if isAdmin();
+    }
+
+    // Public contact form: anyone may create an enquiry. The server action
+    // that creates a doc also transitions its emailStatus (sent/skipped) or
+    // deletes it if delivery fails, all in the same unauthenticated request —
+    // so those follow-up writes are scoped narrowly rather than requiring auth.
+    match /contactSubmissions/{docId} {
+      allow read: if isAdmin();
+      allow create: if true;
+      allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['emailStatus']);
+      allow delete: if resource.data.emailStatus == 'pending';
     }
   }
 }
