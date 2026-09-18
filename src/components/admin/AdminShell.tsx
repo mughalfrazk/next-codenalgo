@@ -11,14 +11,24 @@ import {
   Text,
   useMantineColorScheme,
 } from '@mantine/core'
-import { CaretDownIcon, GearIcon, ListIcon, MoonIcon, SunIcon } from '@phosphor-icons/react'
+import {
+  CaretDownIcon,
+  GearIcon,
+  ListIcon,
+  MoonIcon,
+  SunIcon,
+  TrayIcon,
+} from '@phosphor-icons/react'
 import { signOut } from 'firebase/auth'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useAuth } from '@/lib/firebase/AuthProvider'
 import { getFirebaseAuth } from '@/lib/firebase/client'
 
-const NAV_LINKS = [{ label: 'Site Settings', href: '/admin/settings', icon: GearIcon }]
+const NAV_LINKS = [
+  { label: 'Site Settings', href: '/admin/settings', icon: GearIcon },
+  { label: 'Submissions', href: '/admin/submissions', icon: TrayIcon },
+]
 
 export function AdminShell({ children }: { children: React.ReactNode }) {
   const [navOpen, setNavOpen] = useState(true)

@@ -101,6 +101,18 @@ body {
   margin: 0;
 }
 
+/*
+ * The /contact page mounts a scoped MantineProvider for its toast
+ * notifications. Mantine's stylesheet sets plain `body { background; color }`
+ * rules, which — being loaded after this file on that route — otherwise win
+ * the cascade and wash out the whole page. Higher specificity keeps the
+ * site's own theme in control everywhere, admin panel included.
+ */
+html body {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+}
+
 @layer base {
   a {
     color: inherit;

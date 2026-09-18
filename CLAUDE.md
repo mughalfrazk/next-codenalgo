@@ -28,10 +28,10 @@ yarn test:coverage # run with 100% coverage enforcement (v8)
 
 - **Content lives in `src/content/`** — all copy (headings, body text, stats, FAQs, service definitions) is exported as typed TypeScript constants. Pages import from there; components are purely presentational. To update copy, edit the content files, not the components or pages.
 - **`src/content/site.ts`** is the single source of truth for brand data (name, URL, email, phone, nav links, footer links, socials).
-- **`src/content/services.ts`** drives both `/services` (listing) and `/services/[slug]` (detail) — the slug is derived from the service `id` field.
-- **Pages** (`src/app/**/page.tsx`) are Server Components that compose shared components and pull from `src/content/`.
+- **`src/content/services.ts`** drives both `/services` (listing) and `/services/[slug]` (detail) — each service has its own `slug` field.
+- **Pages** (`src/app/(site)/**/page.tsx`) are Server Components that compose shared components and pull from `src/content/`.
 - **Components** (`src/components/`) are shared UI primitives (Section, Card, Navbar, Footer, etc.). They accept props; they do not fetch or import content directly.
-- **Contact form** (`src/app/contact/`) uses a React 19 Server Action (`actions.ts`) with Zod validation (`schema.ts`). Email delivery is via Resend; the form succeeds silently in dev without `RESEND_API_KEY`.
+- **Contact form** (`src/app/(site)/contact/`) uses a React 19 Server Action (`actions.ts`) with Zod validation (`schema.ts`). Email delivery is via Resend; the form succeeds silently in dev without `RESEND_API_KEY`.
 
 ### Environment variables
 
@@ -46,3 +46,19 @@ For local dev, copy `.env.example` → `.env.local`. For Cloudflare, use `wrangl
 ### Deployment
 
 The app targets **Cloudflare Workers** (not Vercel/Node). `open-next.config.ts` uses the default `defineCloudflareConfig()`. Secrets are set via Wrangler, not `wrangler.jsonc`. After deploying, Cloudflare observability is enabled automatically.
+
+Releases are driven by `.github/workflows/release-please.yml` on every push to `main`:
+
+- `deploy-preview` runs only when the push does **not** create a release (`!release_created`) — i.e. normal merges, including the release-please PR being opened/updated.
+- `deploy-production` runs only when the push **does** create a release (`release_created`) — i.e. merging the release-please PR into `main`.
+- This split exists so merging the release PR doesn't redundantly redeploy preview (it already deployed on the prior push that updated the release-please branch).
+
+### Firestore rules
+
+`firestore.rules` is **not** deployed by CI — there is no `firebase deploy --only firestore:rules` step anywhere in the workflows. After editing `firestore.rules`, deploy it manually:
+
+```bash
+firebase deploy --only firestore:rules
+```
+
+The `isAdmin()` check in `firestore.rules` hardcodes a single Firebase Auth UID rather than a role/claim — if admin writes 403 with "Missing or insufficient permissions," check that the signed-in account's UID (Firebase Console → Authentication → Users) actually matches the UID in `firestore.rules` before assuming a rules-deploy issue.

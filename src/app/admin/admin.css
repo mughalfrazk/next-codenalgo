@@ -165,3 +165,31 @@
   font-weight: 700;
   color: var(--admin-text);
 }
+
+.admin-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--admin-muted);
+}
+
+.admin-avatar {
+  background: linear-gradient(135deg, #386cea, #4a6fd8) !important;
+  color: #fff !important;
+  font-weight: 700;
+}
+
+.admin-avatar .mantine-Avatar-placeholder {
+  background: transparent !important;
+  color: #fff !important;
+}
+
+.admin-detail-box {
+  border-radius: 12px;
+  padding: 16px 18px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--admin-text);
+  white-space: pre-wrap;
+}

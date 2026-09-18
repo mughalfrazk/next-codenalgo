@@ -1,23 +1,21 @@
 'use server'
 
-import { Resend } from 'resend'
-import { contactSchema, type ContactState } from './schema'
-import { fetchSiteSettings } from '@/data/siteSettings'
+import { contactSubmissionInputSchema } from '@/models/contactSubmission'
+import { submitContactSubmission } from '@/data/contactSubmissions'
+import type { ContactState } from './schema'
 
 /**
  * Handle a contact-form submission.
  *
- * Validates on the server (source of truth), then delivers the enquiry by
- * email via Resend when `RESEND_API_KEY` is configured. Without a key the
- * submission is logged server-side and still reported as successful, so the
- * form is fully functional in local/dev without any secrets.
+ * Validates on the server (source of truth), then delegates persistence and
+ * email delivery to the data layer.
  */
 export async function submitContact(
   _prev: ContactState,
   formData: FormData
 ): Promise<ContactState> {
   const raw = Object.fromEntries(formData.entries())
-  const parsed = contactSchema.safeParse(raw)
+  const parsed = contactSubmissionInputSchema.safeParse(raw)
 
   if (!parsed.success) {
     const errors: ContactState['errors'] = {}
@@ -29,54 +27,8 @@ export async function submitContact(
     return { ok: false, message: 'Please fix the highlighted fields.', errors }
   }
 
-  const data = parsed.data
+  const result = await submitContactSubmission(parsed.data)
 
-  const summary = [
-    `Name: ${data.name}`,
-    `Email: ${data.email}`,
-    data.company ? `Company: ${data.company}` : null,
-    data.phone ? `Phone: ${data.phone}` : null,
-    data.service ? `Service: ${data.service}` : null,
-    data.budget ? `Budget: ${data.budget}` : null,
-    '',
-    data.details,
-  ]
-    .filter(Boolean)
-    .join('\n')
-
-  const apiKey = process.env.RESEND_API_KEY
-
-  if (!apiKey) {
-    // No provider configured — log and succeed so the form works without secrets.
-    console.info('[contact] submission (email delivery disabled — no RESEND_API_KEY):\n' + summary)
-    return { ok: true, message: 'Message Sent ✓' }
-  }
-
-  try {
-    const resend = new Resend(apiKey)
-    const to = process.env.CONTACT_TO_EMAIL || (await fetchSiteSettings()).email
-    const { error } = await resend.emails.send({
-      from: process.env.CONTACT_FROM_EMAIL || 'Code & Algo <onboarding@resend.dev>',
-      to,
-      replyTo: data.email,
-      subject: `New enquiry from ${data.name}${data.company ? ` (${data.company})` : ''}`,
-      text: summary,
-    })
-
-    if (error) {
-      console.error('[contact] Resend error:', error)
-      return {
-        ok: false,
-        message: 'Something went wrong sending your message. Please email us directly.',
-      }
-    }
-
-    return { ok: true, message: 'Message Sent ✓' }
-  } catch (err) {
-    console.error('[contact] unexpected error:', err)
-    return {
-      ok: false,
-      message: 'Something went wrong sending your message. Please email us directly.',
-    }
-  }
+  if (!result.ok) return { ok: false, message: result.message }
+  return { ok: true, message: 'Message Sent ✓' }
 }

@@ -11,6 +11,7 @@ import { Faq } from '@/components/Faq'
 import { ContactForm } from '@/components/ContactForm'
 import { contactFaq, contactHero } from '@/content/contact'
 import { fetchSiteSettings } from '@/data/siteSettings'
+import { ContactProviders } from './providers'
 
 export const revalidate = 60
 
@@ -44,7 +45,9 @@ export default async function ContactPage() {
               Any Query
             </Eyebrow>
             <div className="mb-6 text-[24px] font-extrabold text-ink">Get in Touch Today</div>
-            <ContactForm />
+            <ContactProviders>
+              <ContactForm />
+            </ContactProviders>
           </div>
 
           {/* Side rail */}

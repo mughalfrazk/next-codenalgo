@@ -1,10 +1,12 @@
 'use client'
 
-import { useActionState } from 'react'
+import { notifications } from '@mantine/notifications'
+import { type FormEvent, useActionState, useEffect, useRef, useState } from 'react'
 import { useFormStatus } from 'react-dom'
 import { submitContact } from '@/app/(site)/contact/actions'
 import type { ContactState } from '@/app/(site)/contact/schema'
 import { budgetOptions, serviceOptions } from '@/content/contact'
+import { contactSubmissionInputSchema } from '@/models/contactSubmission'
 
 const initialState: ContactState = { ok: false }
 
@@ -12,6 +14,13 @@ const inputClass =
   'w-full rounded-xl border border-black/10 bg-white/70 px-4 py-3.5 text-[14px] font-medium text-ink placeholder:text-muted-2 focus:outline-2 focus:outline-offset-1 focus:outline-brand'
 
 const labelClass = 'sr-only'
+
+type ValidatedField = 'name' | 'email' | 'details' | 'consent'
+
+function validateField(field: ValidatedField, value: string | boolean): string | undefined {
+  const result = contactSubmissionInputSchema.shape[field].safeParse(value)
+  return result.success ? undefined : result.error.issues[0]?.message
+}
 
 function FieldError({ msg }: { msg?: string }) {
   if (!msg) return null
@@ -24,7 +33,7 @@ function SubmitButton({ done }: { done: boolean }) {
     <button
       type="submit"
       disabled={pending || done}
-      className="col-span-2 rounded-full bg-brand-gradient px-[30px] py-[15px] text-[14px] font-bold text-white shadow-[0_10px_26px_rgba(56,108,234,.35)] transition-opacity disabled:opacity-70"
+      className="col-span-2 cursor-pointer rounded-full bg-brand-gradient px-[30px] py-[15px] text-[14px] font-bold text-white shadow-[0_10px_26px_rgba(56,108,234,.35)] transition-opacity disabled:opacity-70"
     >
       {done ? 'Message Sent ✓' : pending ? 'Sending…' : 'Send Message'}
     </button>
@@ -34,23 +43,105 @@ function SubmitButton({ done }: { done: boolean }) {
 export function ContactForm() {
   const [state, formAction] = useActionState(submitContact, initialState)
   const done = state.ok
+  const formRef = useRef<HTMLFormElement>(null)
+  const [touched, setTouched] = useState<Partial<Record<ValidatedField, boolean>>>({})
+  const [clientErrors, setClientErrors] = useState<Partial<Record<ValidatedField, string>>>({})
+
+  // Clear local validation state exactly once when a submission newly succeeds
+  // ("adjusting state when a prop changes" — https://react.dev/reference/react/useState#storing-information-from-previous-renders).
+  const [prevDone, setPrevDone] = useState(false)
+  if (done !== prevDone) {
+    setPrevDone(done)
+    if (done) {
+      setTouched({})
+      setClientErrors({})
+    }
+  }
+
+  useEffect(() => {
+    if (state.ok) {
+      notifications.show({ title: 'Message sent', message: 'Message Sent ✓', color: 'green' })
+      formRef.current?.reset()
+    } else if (state.message && !state.errors) {
+      notifications.show({ title: 'Error', message: state.message, color: 'red' })
+    }
+  }, [state])
+
+  function handleFieldChange(field: ValidatedField, value: string | boolean) {
+    if (!touched[field]) return
+    setClientErrors((prev) => ({ ...prev, [field]: validateField(field, value) }))
+  }
+
+  function handleFieldBlur(field: ValidatedField, value: string | boolean) {
+    setTouched((prev) => ({ ...prev, [field]: true }))
+    setClientErrors((prev) => ({ ...prev, [field]: validateField(field, value) }))
+  }
+
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    const data = new FormData(e.currentTarget)
+    const fields: ValidatedField[] = ['name', 'email', 'details', 'consent']
+    const nextTouched: Partial<Record<ValidatedField, boolean>> = {}
+    const nextErrors: Partial<Record<ValidatedField, string>> = {}
+    let hasError = false
+
+    for (const field of fields) {
+      const raw = field === 'consent' ? data.get(field) === 'on' : (data.get(field) as string)
+      nextTouched[field] = true
+      const error = validateField(field, raw as string | boolean)
+      if (error) {
+        nextErrors[field] = error
+        hasError = true
+      }
+    }
+
+    setTouched(nextTouched)
+    setClientErrors(nextErrors)
+
+    if (hasError) e.preventDefault()
+  }
+
+  function errorFor(field: ValidatedField): string | undefined {
+    return clientErrors[field] ?? state.errors?.[field]
+  }
 
   return (
-    <form action={formAction} className="grid grid-cols-2 gap-4" noValidate>
+    <form
+      ref={formRef}
+      action={formAction}
+      onSubmit={handleSubmit}
+      className="grid grid-cols-2 gap-4"
+      noValidate
+    >
       <div className="col-span-2 sm:col-span-1">
         <label htmlFor="name" className={labelClass}>
           Full Name
         </label>
-        <input id="name" name="name" type="text" placeholder="Full Name" className={inputClass} />
-        <FieldError msg={state.errors?.name} />
+        <input
+          id="name"
+          name="name"
+          type="text"
+          placeholder="Full Name"
+          className={inputClass}
+          onChange={(e) => handleFieldChange('name', e.target.value)}
+          onBlur={(e) => handleFieldBlur('name', e.target.value)}
+        />
+        <FieldError msg={errorFor('name')} />
       </div>
 
       <div className="col-span-2 sm:col-span-1">
         <label htmlFor="email" className={labelClass}>
           Email
         </label>
-        <input id="email" name="email" type="email" placeholder="Email" className={inputClass} />
-        <FieldError msg={state.errors?.email} />
+        <input
+          id="email"
+          name="email"
+          type="email"
+          placeholder="Email"
+          className={inputClass}
+          onChange={(e) => handleFieldChange('email', e.target.value)}
+          onBlur={(e) => handleFieldBlur('email', e.target.value)}
+        />
+        <FieldError msg={errorFor('email')} />
       </div>
 
       <div className="col-span-2 sm:col-span-1">
@@ -117,16 +208,24 @@ export function ContactForm() {
           rows={4}
           placeholder="Project Details"
           className={`${inputClass} resize-y`}
+          onChange={(e) => handleFieldChange('details', e.target.value)}
+          onBlur={(e) => handleFieldBlur('details', e.target.value)}
         />
-        <FieldError msg={state.errors?.details} />
+        <FieldError msg={errorFor('details')} />
       </div>
 
       <div className="col-span-2">
         <label className="flex items-center gap-2.5 text-[13px] font-medium text-muted">
-          <input type="checkbox" name="consent" className="h-4 w-4 accent-[#386cea]" />I agree to be
-          contacted about my enquiry.
+          <input
+            type="checkbox"
+            name="consent"
+            className="h-4 w-4 appearance-none rounded border border-black/20 bg-white checked:appearance-auto checked:accent-[#386cea]"
+            onChange={(e) => handleFieldChange('consent', e.target.checked)}
+            onBlur={(e) => handleFieldBlur('consent', e.target.checked)}
+          />
+          I agree to be contacted about my enquiry.
         </label>
-        <FieldError msg={state.errors?.consent} />
+        <FieldError msg={errorFor('consent')} />
       </div>
 
       <SubmitButton done={done} />

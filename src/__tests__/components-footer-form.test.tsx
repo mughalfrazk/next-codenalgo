@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 vi.mock('next/link', () => ({
@@ -126,11 +126,101 @@ describe('ContactForm', () => {
     expect(screen.getByRole('button', { name: /message sent/i })).toBeDefined()
   })
 
+  it('clears local validation state on the success transition and skips it once already cleared', () => {
+    mockFormState = { ok: false }
+    const { rerender } = render(<ContactForm />)
+    mockFormState = { ok: true, message: 'Message Sent ✓' }
+    rerender(<ContactForm />)
+    expect(screen.getByRole('button', { name: /message sent/i })).toBeDefined()
+    mockFormState = { ok: false }
+    rerender(<ContactForm />)
+    expect(screen.getByRole('button', { name: /send message/i })).toBeDefined()
+  })
+
   it('shows pending state while submitting', () => {
     mockFormState = { ok: false }
     mockPending = true
     render(<ContactForm />)
     expect(screen.getByRole('button', { name: /sending/i })).toBeDefined()
     mockPending = false
+  })
+
+  it('shows a client-side error after a field is touched and left invalid', () => {
+    mockFormState = { ok: false }
+    render(<ContactForm />)
+    const name = screen.getByPlaceholderText('Full Name')
+    fireEvent.change(name, { target: { value: 'A' } })
+    fireEvent.blur(name)
+    expect(screen.getByText('Please enter your name.')).toBeDefined()
+  })
+
+  it('clears a client-side error once the field becomes valid', () => {
+    mockFormState = { ok: false }
+    render(<ContactForm />)
+    const name = screen.getByPlaceholderText('Full Name')
+    fireEvent.change(name, { target: { value: 'A' } })
+    fireEvent.blur(name)
+    expect(screen.getByText('Please enter your name.')).toBeDefined()
+    fireEvent.change(name, { target: { value: 'Abdul' } })
+    expect(screen.queryByText('Please enter your name.')).toBeNull()
+  })
+
+  it('validates the consent checkbox and the details textarea on blur', () => {
+    mockFormState = { ok: false }
+    render(<ContactForm />)
+    const consent = screen.getByRole('checkbox')
+    fireEvent.click(consent)
+    fireEvent.blur(consent)
+    fireEvent.click(consent)
+    expect(screen.getByText('Please agree to be contacted.')).toBeDefined()
+
+    const details = screen.getByPlaceholderText('Project Details')
+    fireEvent.change(details, { target: { value: 'short' } })
+    fireEvent.blur(details)
+    expect(screen.getByText(/tell us a little/i)).toBeDefined()
+  })
+
+  it('validates email on blur', () => {
+    mockFormState = { ok: false }
+    render(<ContactForm />)
+    const email = screen.getByPlaceholderText('Email')
+    fireEvent.change(email, { target: { value: 'bad' } })
+    fireEvent.blur(email)
+    expect(screen.getByText('Please enter a valid email address.')).toBeDefined()
+  })
+
+  it('handles a generic server error state without throwing', () => {
+    mockFormState = {
+      ok: false,
+      message: 'Something went wrong sending your message. Please email us directly.',
+    }
+    render(<ContactForm />)
+    expect(screen.getByRole('button', { name: /send message/i })).toBeDefined()
+  })
+
+  it('prevents submission and marks all validated fields touched when the form is invalid', () => {
+    mockFormState = { ok: false }
+    const { container } = render(<ContactForm />)
+    const form = container.querySelector('form') as HTMLFormElement
+    fireEvent.submit(form)
+    expect(screen.getByText('Please enter your name.')).toBeDefined()
+    expect(screen.getByText('Please enter a valid email address.')).toBeDefined()
+    expect(screen.getByText('Please agree to be contacted.')).toBeDefined()
+  })
+
+  it('allows submission through when every validated field is valid', () => {
+    mockFormState = { ok: false }
+    const { container } = render(<ContactForm />)
+    fireEvent.change(screen.getByPlaceholderText('Full Name'), { target: { value: 'Abdul' } })
+    fireEvent.change(screen.getByPlaceholderText('Email'), { target: { value: 'a@example.com' } })
+    fireEvent.change(screen.getByPlaceholderText('Project Details'), {
+      target: { value: 'I need a custom website built for my business.' },
+    })
+    fireEvent.click(screen.getByRole('checkbox'))
+    const form = container.querySelector('form') as HTMLFormElement
+    fireEvent.submit(form)
+    expect(screen.queryByText('Please enter your name.')).toBeNull()
+    expect(screen.queryByText('Please enter a valid email address.')).toBeNull()
+    expect(screen.queryByText('Please agree to be contacted.')).toBeNull()
   })
 })
