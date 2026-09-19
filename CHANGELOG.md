@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/mughalfrazk/next-codenalgo/compare/next-code-n-algo-v0.4.0...next-code-n-algo-v0.5.0) (2026-09-18)
+
+
+### Features
+
+* **contact-form:** finish contact-to-Firestore-to-admin flow and fix theming/consent bugs ([#15](https://github.com/mughalfrazk/next-codenalgo/issues/15)) ([9cdd72e](https://github.com/mughalfrazk/next-codenalgo/commit/9cdd72efe852cc064c8bb5378586ddb477e4a76a))
+
 ## [0.4.0](https://github.com/mughalfrazk/next-codenalgo/compare/next-code-n-algo-v0.3.0...next-code-n-algo-v0.4.0) (2026-09-06)
 
 ### Features
