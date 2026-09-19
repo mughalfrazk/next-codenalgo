@@ -109,13 +109,12 @@ describe('contact submissions data layer', () => {
       expect(mockDeleteDoc).toHaveBeenCalled()
     })
 
-    it('uses CONTACT_FROM_EMAIL and CONTACT_TO_EMAIL env vars when set', async () => {
+    it('uses CONTACT_FROM_EMAIL env var and siteSettings.email as recipient when set', async () => {
       vi.stubEnv('RESEND_API_KEY', 're_test_key')
       vi.stubEnv('CONTACT_FROM_EMAIL', 'from@custom.com')
-      vi.stubEnv('CONTACT_TO_EMAIL', 'to@custom.com')
       await submitContactSubmission(input)
       expect(mockSend).toHaveBeenCalledWith(
-        expect.objectContaining({ from: 'from@custom.com', to: 'to@custom.com' })
+        expect.objectContaining({ from: 'from@custom.com', to: 'hello@codenalgo.com' })
       )
     })
 

@@ -39,7 +39,8 @@ yarn test:coverage # run with 100% coverage enforcement (v8)
 | -------------------- | ---------------------------------------------------- |
 | `RESEND_API_KEY`     | Resend API key for contact-form email delivery       |
 | `CONTACT_FROM_EMAIL` | Sender address (defaults to `onboarding@resend.dev`) |
-| `CONTACT_TO_EMAIL`   | Recipient address (defaults to `site.email`)         |
+
+Recipient address is not an env var — it's `siteSettings.email`, editable by admins in the admin panel (falls back to `getDefaultSiteSettings()` when Firebase isn't configured).
 
 For local dev, copy `.env.example` → `.env.local`. For Cloudflare, use `wrangler secret put <VAR>`.
 

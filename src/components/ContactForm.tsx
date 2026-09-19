@@ -27,15 +27,15 @@ function FieldError({ msg }: { msg?: string }) {
   return <p className="mt-1 text-[12px] font-medium text-[#b00020]">{msg}</p>
 }
 
-function SubmitButton({ done }: { done: boolean }) {
+function SubmitButton({ showSuccess }: { showSuccess: boolean }) {
   const { pending } = useFormStatus()
   return (
     <button
       type="submit"
-      disabled={pending || done}
+      disabled={pending}
       className="col-span-2 cursor-pointer rounded-full bg-brand-gradient px-[30px] py-[15px] text-[14px] font-bold text-white shadow-[0_10px_26px_rgba(56,108,234,.35)] transition-opacity disabled:opacity-70"
     >
-      {done ? 'Message Sent ✓' : pending ? 'Sending…' : 'Send Message'}
+      {showSuccess ? 'Message Sent ✓' : pending ? 'Sending…' : 'Send Message'}
     </button>
   )
 }
@@ -46,12 +46,14 @@ export function ContactForm() {
   const formRef = useRef<HTMLFormElement>(null)
   const [touched, setTouched] = useState<Partial<Record<ValidatedField, boolean>>>({})
   const [clientErrors, setClientErrors] = useState<Partial<Record<ValidatedField, string>>>({})
+  const [showSuccess, setShowSuccess] = useState(false)
 
   // Clear local validation state exactly once when a submission newly succeeds
   // ("adjusting state when a prop changes" — https://react.dev/reference/react/useState#storing-information-from-previous-renders).
   const [prevDone, setPrevDone] = useState(false)
   if (done !== prevDone) {
     setPrevDone(done)
+    setShowSuccess(done)
     if (done) {
       setTouched({})
       setClientErrors({})
@@ -59,12 +61,17 @@ export function ContactForm() {
   }
 
   useEffect(() => {
-    if (state.ok) {
-      notifications.show({ title: 'Message sent', message: 'Message Sent ✓', color: 'green' })
-      formRef.current?.reset()
-    } else if (state.message && !state.errors) {
-      notifications.show({ title: 'Error', message: state.message, color: 'red' })
+    if (!state.ok) {
+      if (state.message && !state.errors) {
+        notifications.show({ title: 'Error', message: state.message, color: 'red' })
+      }
+      return
     }
+
+    notifications.show({ title: 'Message sent', message: 'Message Sent ✓', color: 'green' })
+    formRef.current?.reset()
+    const timeout = setTimeout(() => setShowSuccess(false), 4000)
+    return () => clearTimeout(timeout)
   }, [state])
 
   function handleFieldChange(field: ValidatedField, value: string | boolean) {
@@ -228,7 +235,7 @@ export function ContactForm() {
         <FieldError msg={errorFor('consent')} />
       </div>
 
-      <SubmitButton done={done} />
+      <SubmitButton showSuccess={showSuccess} />
 
       <div
         className="col-span-2 text-[12px] leading-[1.5] font-medium text-muted-2"
