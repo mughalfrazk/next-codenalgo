@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { act, fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 vi.mock('next/link', () => ({
@@ -206,6 +206,22 @@ describe('ContactForm', () => {
     expect(screen.getByText('Please enter your name.')).toBeDefined()
     expect(screen.getByText('Please enter a valid email address.')).toBeDefined()
     expect(screen.getByText('Please agree to be contacted.')).toBeDefined()
+  })
+
+  it('reverts to the send state after the success timeout elapses', () => {
+    vi.useFakeTimers()
+    mockFormState = { ok: false }
+    const { rerender } = render(<ContactForm />)
+    mockFormState = { ok: true, message: 'Message Sent ✓' }
+    rerender(<ContactForm />)
+    expect(screen.getByRole('button', { name: /message sent/i })).toBeDefined()
+
+    act(() => {
+      vi.advanceTimersByTime(2000)
+    })
+
+    expect(screen.getByRole('button', { name: /send message/i })).toBeDefined()
+    vi.useRealTimers()
   })
 
   it('allows submission through when every validated field is valid', () => {
