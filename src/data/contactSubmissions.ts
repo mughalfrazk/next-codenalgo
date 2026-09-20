@@ -193,7 +193,7 @@ export async function submitContactSubmission(
 
   try {
     const resend = new Resend(apiKey)
-    const to = process.env.CONTACT_TO_EMAIL || (await fetchSiteSettings()).email
+    const to = (await fetchSiteSettings()).email
     const { error } = await resend.emails.send({
       from: process.env.CONTACT_FROM_EMAIL || 'Code & Algo <onboarding@resend.dev>',
       to,

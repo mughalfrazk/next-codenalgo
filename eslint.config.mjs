@@ -23,6 +23,7 @@ const eslintConfig = defineConfig([
     'coverage/**',
     'next-env.d.ts',
     'commitlint.config.js',
+    'loadtest/**',
   ]),
 ])
 

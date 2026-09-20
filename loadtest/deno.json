@@ -1,0 +1,9 @@
+{
+  "tasks": {
+    "flood-contact": "deno run --allow-net --allow-env scenarios/01-flood-contact.ts",
+    "oversized-payload": "deno run --allow-net --allow-env scenarios/02-oversized-payload.ts",
+    "concurrent-race": "deno run --allow-net --allow-env scenarios/03-concurrent-race.ts",
+    "bypass-consent": "deno run --allow-net --allow-env scenarios/04-bypass-consent.ts",
+    "static-flood": "deno run --allow-net --allow-env scenarios/05-static-page-flood.ts"
+  }
+}

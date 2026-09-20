@@ -62,8 +62,10 @@ is still saved and the user sees the success state, but no email is sent. To
 enable real delivery:
 
 1. Copy `.env.example` → `.env.local`
-2. Set `RESEND_API_KEY` (and optionally `CONTACT_FROM_EMAIL` / `CONTACT_TO_EMAIL`).
-   The `from` address must be verified in your Resend account.
+2. Set `RESEND_API_KEY` (and optionally `CONTACT_FROM_EMAIL`).
+   The `from` address must be verified in your Resend account. The recipient
+   address is `siteSettings.email`, editable by admins in the admin panel —
+   not an env var.
 
 Validation is enforced server-side in `src/app/(site)/contact/actions.ts`
 regardless of whether email delivery is configured. See `CLAUDE.md` for
@@ -90,9 +92,9 @@ Config lives in `wrangler.jsonc` and `open-next.config.ts`.
 2. Build command: `yarn deploy` (or `npx opennextjs-cloudflare build && npx wrangler deploy`).
    Deploy command is handled by the build; leave the output as configured by `wrangler.jsonc`.
 3. Add the contact-form secrets under **Settings → Variables and Secrets**
-   (encrypted): `RESEND_API_KEY`, and optionally `CONTACT_FROM_EMAIL` /
-   `CONTACT_TO_EMAIL`. (Without them the form still works — it just logs instead
-   of emailing.)
+   (encrypted): `RESEND_API_KEY`, and optionally `CONTACT_FROM_EMAIL`.
+   (Without them the form still works — it just logs instead of emailing.)
+   The recipient address is `siteSettings.email`, editable by admins.
 4. **Custom domain:** Settings → Domains & Routes → **Add custom domain**. If the
    domain's DNS is on Cloudflare, records + HTTPS are configured automatically;
    otherwise add the CNAME they give you at your registrar.
