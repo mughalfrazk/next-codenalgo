@@ -32,7 +32,7 @@ function SubmitButton({ showSuccess }: { showSuccess: boolean }) {
   return (
     <button
       type="submit"
-      disabled={pending}
+      disabled={pending || showSuccess}
       className="col-span-2 cursor-pointer rounded-full bg-brand-gradient px-[30px] py-[15px] text-[14px] font-bold text-white shadow-[0_10px_26px_rgba(56,108,234,.35)] transition-opacity disabled:opacity-70"
     >
       {showSuccess ? 'Message Sent ✓' : pending ? 'Sending…' : 'Send Message'}
@@ -70,7 +70,7 @@ export function ContactForm() {
 
     notifications.show({ title: 'Message sent', message: 'Message Sent ✓', color: 'green' })
     formRef.current?.reset()
-    const timeout = setTimeout(() => setShowSuccess(false), 4000)
+    const timeout = setTimeout(() => setShowSuccess(false), 2000)
     return () => clearTimeout(timeout)
   }, [state])
 
