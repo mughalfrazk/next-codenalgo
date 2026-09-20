@@ -5,3 +5,4 @@ coverage
 yarn.lock
 next-env.d.ts
 cloudflare-env.d.ts
+CHANGELOG.md
